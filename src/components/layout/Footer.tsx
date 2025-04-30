@@ -85,7 +85,7 @@ const Footer = () => {
                 className="text-[13px] font-normal text-secondary-400 focus:outline-transparent w-full"
               />
               <img
-                src="/public/icons/mail.svg"
+                src="/icons/mail.svg"
                 alt="mail_icon"
                 className="h-auto w-auto"
               />
