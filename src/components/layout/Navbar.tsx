@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { Switch } from "@/components/ui/switch"
+
 
 const Navbar = () => {
   type NavMenu = {
@@ -14,7 +16,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="px-5 lg:px-30 py-6 flex items-center justify-between font-roboto">
+    <nav className="container mx-auto w-full px-5 lg:px-30 py-6 flex items-center justify-between font-roboto">
       <img src="/icons/Logo.svg" alt="logo" />
       <ul className="flex items-center gap-x-7.5">
         {navMenu.map((item, index) => (
@@ -38,7 +40,9 @@ const Navbar = () => {
           <input type="text" placeholder="Search" className="text-secondary-400 text-base font-normal focus:outline-secondary-100 w-full"/>
           <img src="/icons/search.svg" alt="search_icon"/>
         </div>
-        <div className="">1</div>
+        <div className="">
+        <Switch />
+        </div>
       </div>
     </nav>
   );
