@@ -79,7 +79,7 @@ const Navbar = () => {
       </div>
       {isMenuOpen && (
         <div
-          className={`flex flex-col p-5 py-8 text-white fixed top-24 h-fit bg-white w-screen left-0 right-0 animate-slideDown ${
+          className={`flex flex-col p-5 py-8 text-white fixed top-24 h-fit bg-white w-screen left-0 right-0 animate-slideDown z-50 ${
             isExiting ? "animate-slideUp" : "animate-slideDown"
           }`}
         >
