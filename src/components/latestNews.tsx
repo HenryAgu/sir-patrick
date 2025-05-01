@@ -34,8 +34,10 @@ const LatestNews = () => {
       {news.map((item, index) => (
         <Link
           to={item.path}
-          className="flex gap-x-5 lg:gap-x-10 border-b border-b-brand-gray-200 w-fit py-2 lg:py-4"
           key={index}
+          className={`flex gap-x-2.5 lg:gap-x-10 w-fit py-2 lg:py-4 ${
+            index !== news.length - 1 ? "border-b border-b-brand-gray-200" : ""
+          }`}
         >
           <img
             src={item.image}
