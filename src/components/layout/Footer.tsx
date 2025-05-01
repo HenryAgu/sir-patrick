@@ -25,7 +25,7 @@ const Footer = () => {
     },
   ];
   return (
-    <footer className="bg-brand-green-300 px-5 lg:px-30 py-10 font-roboto border-t border-t-secondary-100 container mx-auto w-full ">
+    <footer className="bg-brand-green-300 px-3.5 lg:px-30 py-10 font-roboto border-t border-t-secondary-100 container mx-auto w-full ">
       <div className="flex lg:flex-row flex-col-reverse items-center lg:items-start text-center lg:text-left gap-x-30 2xl:gap-x-40">
         <div className="flex flex-col gap-y-3.5 border-t lg:border-t-0 border-brand-gray-300 pt-5 lg:pt-0 w-full lg:w-fit">
           <p className="text-secondary-900 text-base leading-[21px] font-semibold hidden lg:block">
