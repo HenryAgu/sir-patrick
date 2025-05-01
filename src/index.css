@@ -16,6 +16,7 @@
   }
 }
 @theme {
+  --color-secondary-50: #F6F6F7;
   --color-secondary-100: #e8e8ea;
   --color-secondary-200: #dcdddf;
   --color-secondary-400: #97989f;
