@@ -65,21 +65,31 @@ const Navbar = () => {
         <div className="flex lg:hidden">
           <button
             className="bg-brand-green-200 p-1 rounded-[3px]"
-            onClick={() => setIsMenuOpen(true)}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <img src="/icons/menu.svg" alt="menu_icon" />
+            {isMenuOpen ?<img src="/icons/close.svg" alt="close_icon" />:<img src="/icons/menu.svg" alt="menu_icon" /> }
           </button>
         </div>
       </div>
       {isMenuOpen && (
         <div
-          className={`flex flex-col p-5 py-8 text-white fixed top-0 h-screen bg-brand-gray-400 w-screen left-0 right-0 animate-slideDown ${
+          className={`flex flex-col p-5 py-8 text-white fixed top-24 h-fit bg-white w-screen left-0 right-0 animate-slideDown ${
             isExiting ? "animate-slideUp" : "animate-slideDown"
           }`}
         >
-          <div className="flex items-end justify-end">
-            <button onClick={handleClose}>Close</button>
-          </div>
+          <ul className="flex flex-col items-start gap-y-1 text-brand-gray-500">
+            {navMenu.map((item, index) => (
+              <li key={index}>
+                <Link
+                  to={item.path}
+                  className="text-[13px] font-normal font-roboto leading-[28px]"
+                  onClick={handleClose}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </nav>
