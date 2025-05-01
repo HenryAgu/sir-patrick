@@ -26,7 +26,7 @@ const Navbar = () => {
     }, 500);
   };
   return (
-    <nav className="container mx-auto w-full border-b lg:border-b-0 border-b-brand-gray-800 px-5 lg:px-30 py-6 flex items-center justify-between font-roboto">
+    <nav className="container mx-auto w-full border-b lg:border-b-0 border-b-brand-gray-800 px-5 lg:px-14 xl:px-30 py-6 flex items-center justify-between font-roboto">
       <img
         src="/icons/Logo.svg"
         alt="logo"
