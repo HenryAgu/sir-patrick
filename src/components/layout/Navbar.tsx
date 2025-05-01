@@ -27,11 +27,13 @@ const Navbar = () => {
   };
   return (
     <nav className="container mx-auto w-full border-b lg:border-b-0 border-b-brand-gray-800 px-5 lg:px-14 xl:px-30 py-6 flex items-center justify-between font-roboto">
-      <img
-        src="/icons/Logo.svg"
-        alt="logo"
-        className="lg:w-auto lg:h-auto w-[162px] h-[49px]"
-      />
+      <Link to="/">
+        <img
+          src="/icons/Logo.svg"
+          alt="logo"
+          className="lg:w-auto lg:h-auto w-[162px] h-[49px]"
+        />
+      </Link>
       <ul className="hidden lg:flex items-center gap-x-7.5">
         {navMenu.map((item, index) => (
           <li key={index}>
@@ -67,7 +69,11 @@ const Navbar = () => {
             className="bg-brand-green-200 p-1 rounded-[3px]"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ?<img src="/icons/close.svg" alt="close_icon" />:<img src="/icons/menu.svg" alt="menu_icon" /> }
+            {isMenuOpen ? (
+              <img src="/icons/close.svg" alt="close_icon" />
+            ) : (
+              <img src="/icons/menu.svg" alt="menu_icon" />
+            )}
           </button>
         </div>
       </div>
