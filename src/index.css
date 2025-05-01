@@ -16,7 +16,7 @@
   }
 }
 @theme {
-  --color-secondary-50: #F6F6F7;
+  --color-secondary-50: #f6f6f7;
   --color-secondary-100: #e8e8ea;
   --color-secondary-200: #dcdddf;
   --color-secondary-400: #97989f;
@@ -29,6 +29,7 @@
   --color-brand-green-300: #e6ffda;
   --color-brand-green-900: #35651d;
 
+  --color-brand-gray-200: #f0f0f0;
   --color-brand-gray-300: #e8e8ea;
   --color-brand-gray-400: #aabda1;
   --color-brand-gray-500: #797981;
