@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Switch } from "@/components/ui/switch"
-
+import { Switch } from "@/components/ui/switch";
+import { useState } from "react";
 
 const Navbar = () => {
   type NavMenu = {
@@ -15,10 +15,24 @@ const Navbar = () => {
     { title: "Contact Us", path: "/contact" },
   ];
 
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isExiting, setIsExiting] = useState<boolean>(false);
+
+  const handleClose = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsExiting(false);
+    }, 500);
+  };
   return (
-    <nav className="container mx-auto w-full px-5 lg:px-30 py-6 flex items-center justify-between font-roboto">
-      <img src="/icons/Logo.svg" alt="logo" />
-      <ul className="flex items-center gap-x-7.5">
+    <nav className="container mx-auto w-full border-b lg:border-b-0 border-b-brand-gray-800 px-5 lg:px-30 py-6 flex items-center justify-between font-roboto">
+      <img
+        src="/icons/Logo.svg"
+        alt="logo"
+        className="lg:w-auto lg:h-auto w-[162px] h-[49px]"
+      />
+      <ul className="hidden lg:flex items-center gap-x-7.5">
         {navMenu.map((item, index) => (
           <li key={index}>
             <Link
@@ -27,7 +41,8 @@ const Navbar = () => {
                 className: "text-brand-green-900 font-bold",
               }}
               inactiveProps={{
-                className: "text-base font-normal text-brand-gray-500 transition-color duration-200 ease-in hover:text-brand-green-900",
+                className:
+                  "text-base font-normal text-brand-gray-500 transition-color duration-200 ease-in hover:text-brand-green-900",
               }}
             >
               {item.title}
@@ -35,15 +50,38 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <div className="flex items-center gap-x-7.5">
-        <div className="flex items-center gap-x-3 bg-secondary-100 p-2 pl-4 rounded-[5px]">
-          <input type="text" placeholder="Search" className="text-secondary-400 text-base font-normal focus:outline-secondary-100 w-full"/>
-          <img src="/icons/search.svg" alt="search_icon"/>
+      <div className="flex items-center gap-x-2.5 lg:gap-x-7.5">
+        <div className="flex items-center gap-x-3 bg-brand-green-200 border border-brand-gray-400 lg:border-secondary-100 lg:bg-secondary-100 p-2 pl-4 rounded-[17px] lg:rounded-[5px] w-[100px] lg:w-full">
+          <input
+            type="text"
+            placeholder="Search"
+            className="text-secondary-400 text-[10px] lg:text-base font-normal focus:outline-secondary-100 w-full"
+          />
+          <img src="/icons/search.svg" alt="search_icon" />
         </div>
-        <div className="">
-        <Switch />
+        <div className="hidden lg:flex">
+          <Switch />
+        </div>
+        <div className="flex lg:hidden">
+          <button
+            className="bg-brand-green-200 p-1 rounded-[3px]"
+            onClick={() => setIsMenuOpen(true)}
+          >
+            <img src="/icons/menu.svg" alt="menu_icon" />
+          </button>
         </div>
       </div>
+      {isMenuOpen && (
+        <div
+          className={`flex flex-col p-5 py-8 text-white fixed top-0 h-screen bg-brand-gray-400 w-screen left-0 right-0 animate-slideDown ${
+            isExiting ? "animate-slideUp" : "animate-slideDown"
+          }`}
+        >
+          <div className="flex items-end justify-end">
+            <button onClick={handleClose}>Close</button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
