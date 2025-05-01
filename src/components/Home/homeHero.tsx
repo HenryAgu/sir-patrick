@@ -18,7 +18,7 @@ const HomeHero = () => {
         <p className="bg-[#FB4B4B] text-[13px] lg:text-[21px] lg:leading-[31.2px] text-white w-fit rounded-[9.36px] px-4 py-[7px] relative bottom-5 font-work-sans">
           Latest News
         </p>
-        <h1 className="max-w-[480px] text-brand-green-700 font-semibold text-[13px] lg:text-[31px] lg:leading-10 line-clamp-2">
+        <h1 className="max-w-[480px] text-brand-green-700 font-semibold text-[13px] lg:text-[31px] lg:leading-10 line-clamp-2 mt-[-10px] lg:mt-0">
           Call-Up letter is out now!! Check your dashboard to download
         </h1>
         <div className="lg:mt-5 flex items-center gap-x-5">
