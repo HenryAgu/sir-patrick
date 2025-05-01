@@ -14,7 +14,7 @@ const SocialMenu = () => {
     { title: "instagram", image: "/icons/insta.svg", path: "/" },
   ];
   return (
-    <div className="flex items-center gap-x-2.5 lg:gap-x-3.5 mt-3">
+    <section className="flex items-center gap-x-2.5 lg:gap-x-3.5 mt-3">
       {socialMenu.map((social, index) => (
         <Link to={social.path} key={index}>
           <img
@@ -24,7 +24,7 @@ const SocialMenu = () => {
           />
         </Link>
       ))}
-    </div>
+    </section>
   );
 };
 

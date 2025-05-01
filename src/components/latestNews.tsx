@@ -42,7 +42,7 @@ const LatestNews = () => {
           <img
             src={item.image}
             alt="image"
-            className="lg:w-[237px] lg:h-[145px] lg:aspect-[237/145] w-[108px] h-[85px] aspect-[108/85]"
+            className="lg:w-[237px] lg:h-[145px] lg:aspect-[237/145] w-[108px] h-[85px] aspect-[108/85] object-cover lg:object-contain"
           />
           <div className="flex flex-col gap-y-[8.8px] lg:gap-y-[15px]">
             <span className="text-[#39393999] text-[10px] lg:text-xl font-normal leading-[101%]">
