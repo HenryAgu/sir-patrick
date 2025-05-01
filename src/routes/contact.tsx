@@ -7,7 +7,7 @@ export const Route = createFileRoute("/contact")({
 
 function RouteComponent() {
   return (
-    <main className="px-5 lg:px-30 lg:py-10 mx-auto w-full container min-h-[80vh] lg:min-h-screen font-roboto">
+    <main className="px-5 lg:px-30 py-10 mx-auto w-full container min-h-[80vh] lg:min-h-screen font-roboto">
       <div className="bg-secondary-50 py-10 md:py-[72px] px-5 md:px-[21px] flex items-center justify-center rounded-[12px]">
         <div className="flex flex-col gap-y-3 lg:gap-y-6 md:max-w-[668px] max-w-full">
           <p className="text-secondary-800 text-[25px] font-medium md:font-semibold leading-[28px]">
