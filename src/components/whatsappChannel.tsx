@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
-const ChannelLink = () => {
+const WhatsappChannel = () => {
   return (
-    <section className="lg:w-[75%] w-full mx-auto container mb-20 ">
+    <section className="lg:w-[75%] w-full mx-auto container lg:mb-20 ">
       <Link
         to="/"
         className="bg-brand-green-900 text-white py-2.5 lg:py-5 rounded-[6px] lg:rounded-[12px] flex items-center justify-center gap-x-2.5"
@@ -14,4 +14,4 @@ const ChannelLink = () => {
   );
 };
 
-export default ChannelLink;
+export default WhatsappChannel;

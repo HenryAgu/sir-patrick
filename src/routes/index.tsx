@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import "../index.css";
 import HomeHero from "@/components/Home/homeHero";
-import ChannelLink from "@/components/channelLink";
+import ChannelLink from "@/components/whatsappChannel";
 import BlogPost from "@/components/Home/blogPost";
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -17,7 +17,7 @@ function RouteComponent() {
       </head>
       <HomeHero />
       <ChannelLink />
-      <BlogPost/>
+      <BlogPost />
     </main>
   );
 }

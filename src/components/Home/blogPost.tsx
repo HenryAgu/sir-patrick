@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination";
-import ChannelLink from "../channelLink";
+import ChannelLink from "../whatsappChannel";
 
 type BlogPosts = {
   image: string;
@@ -121,7 +121,7 @@ const BlogPost = () => {
   const displayedPosts = blogPosts.slice(startIndex, startIndex + postsPerPage);
 
   return (
-    <section className="lg:mb-20 mb-10 mt-[-50px] lg:mt-10 md:px-10 lg:px-0">
+    <section className="lg:mb-20 mb-10 mt-10 md:px-10 lg:px-0">
       <p className="text-secondary-800 text-2xl font-bold font-roboto hidden lg:block">
         Blog Post
       </p>
