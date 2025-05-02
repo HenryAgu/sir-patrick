@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
