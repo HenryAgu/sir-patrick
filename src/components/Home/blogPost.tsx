@@ -1,104 +1,208 @@
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../ui/pagination";
+
 type BlogPosts = {
   image: string;
   title: string;
   author: string;
   date: string;
+  path: string;
 };
 
 const BlogPost = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
+
   const blogPosts: BlogPosts[] = [
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
     {
       image: "/images/Image.png",
       title: "How to secure a good PPA whereever you are poosted to for NYSC",
       author: "Sir Patrick",
+      path: "/",
+      date: "August 20, 2025",
+    },
+    {
+      image: "/images/Image.png",
+      title: "How to secure a good PPA whereever you are poosted to for NYSC",
+      author: "Sir Patrick",
+      path: "/",
+      date: "August 20, 2025",
+    },
+    {
+      image: "/images/Image.png",
+      title: "Last post",
+      author: "Sir Patrick",
+      path: "/",
       date: "August 20, 2025",
     },
   ];
+
+  const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const displayedPosts = blogPosts.slice(startIndex, startIndex + postsPerPage);
+
   return (
-    <section className="mb-20">
-      <p className="text-secondary-800 text-2xl font-bold font-roboto">
+    <section className="lg:mb-20 mb-10 mt-[-50px] md:px-10 lg:px-0">
+      <p className="text-secondary-800 text-2xl font-bold font-roboto hidden lg:block">
         Blog Post
       </p>
-      <div className="mt-5 grid grid-cols-3 gap-5">
-        {blogPosts.map((post, index) => (
-          <div className="flex flex-col gap-y-[14.75px] border border-secondary-100 p-3.5 rounded-[12px]" key={index}>
-            <img src={post.image} alt={post.title} className="w-full h-[221.3px] rounded-[6px]" />
+
+      <div className="mt-0 lg:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayedPosts.map((post, index) => (
+          <div
+            className="flex flex-col gap-y-2 lg:gap-y-[14.75px] border border-secondary-100 py-2.5 p-3.5 rounded-[12px]"
+            key={index}
+          >
+            <img
+              src={post.image}
+              alt={post.title}
+              className="w-full h-[170px] lg:h-[221.3px] rounded-[6px] aspect-[332/170] lg:aspect-[332/221.3]"
+            />
             <div className="flex flex-col gap-y-2.5">
-              <p className="text-secondary-800 font-semibold text-2xl leading-[23.05px] line-clamp-3">
-                How to secure a good PPA whereever you are poosted to for NYSC
-              </p>
-              <div className="flex items-center gap-x-5 mt-2">
+              <Link
+                to={post.path}
+                className="text-secondary-800 font-semibold text-base lg:text-[23.05px] leading-[25.82px] line-clamp-3"
+              >
+                {post.title}
+              </Link>
+              <div className="flex items-center gap-x-[18.44px] lg:gap-x-5 lg:mt-2">
                 <div className="flex items-center gap-x-3">
                   <img
                     src="/icons/avatar.svg"
                     alt="avatar_icons"
-                    className="lg:h-[25.82px] lg:w-[25.82px] h-[13.5px] w-[13.5px] aspect-square"
+                    className="h-[25.82px] w-[25.82px] aspect-square"
                   />
-                  <p className="text-secondary-400 text-[10px] lg:text-base font-medium leading-6">
-                    Sir Patrick
+                  <p className="text-secondary-400 text-[13px] lg:text-sm font-medium leading-6">
+                    {post.author}
                   </p>
                 </div>
-                <p className="text-secondary-400 text-[10px] lg:text-base font-normal leading-6">
-                  August 20, 2025
+                <p className="text-secondary-400 text-[13px] lg:text-sm font-normal leading-6">
+                  {post.date}
                 </p>
               </div>
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="flex justify-center my-10">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(currentPage - 1);
+                }}
+              />
+            </PaginationItem>
+
+            {Array.from({ length: totalPages }, (_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink
+                  href="#"
+                  isActive={currentPage === i + 1}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageChange(i + 1);
+                  }}
+                >
+                    {`0${i + 1}`}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(currentPage + 1);
+                }}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </section>
   );

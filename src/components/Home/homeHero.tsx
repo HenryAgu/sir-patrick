@@ -21,12 +21,12 @@ const HomeHero = () => {
         <h1 className="max-w-[480px] text-brand-green-700 font-semibold text-[13px] lg:text-[31px] lg:leading-10 line-clamp-2 mt-[-10px] lg:mt-0">
           Call-Up letter is out now!! Check your dashboard to download
         </h1>
-        <div className="lg:mt-5 flex items-center gap-x-5">
-          <div className="flex items-center gap-x-3">
+        <div className="lg:mt-5 mt-1.5 flex items-center gap-x-5">
+          <div className="flex items-center gap-x-[3.93px] lg:gap-x-3">
             <img
               src="/icons/avatar.svg"
               alt="avatar_icons"
-              className="lg:h-7 lg:w-8 h-[13.5px] w-[13.5px] aspect-square"
+              className="lg:h-7 lg:w-8 h-[13.35px] w-[13.35px] aspect-square"
             />
             <p className="text-secondary-400 text-[10px] lg:text-base font-medium leading-6">
               Sir Patrick
