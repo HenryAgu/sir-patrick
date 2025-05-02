@@ -7,7 +7,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function RouteComponent() {
-  const { slug } = Route.useParams();
+//   const { slug } = Route.useParams();
 
   return (
     <main className="min-h-screen mx-auto container w-full lg:px-60 py-10 lg:pb-20 px-3.5 font-roboto">
