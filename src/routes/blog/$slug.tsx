@@ -16,7 +16,7 @@ function RouteComponent() {
         {/* Header */}
         <section className="flex flex-col gap-y-3.5 lg:gap-y-5">
           <h1 className="font-semibold text-xl leading-7 lg:text-[39px] text-secondary-800 lg:leading-10">
-            How to secure a good PPA whereever you are posted to for NYSC
+            How to secure a good PPA wherever you are posted to for NYSC
           </h1>
           <div className="flex items-center gap-x-7">
             <div className="flex items-center gap-x-2">
