@@ -12,19 +12,19 @@ const news: News[] = [
     path: "/",
     image: "/images/Image.png",
     date: "27th Aprl, 2025",
-    title: "Swaering-In of the Batch A Stream 1 NYSC Corp Members",
+    title: "swearing-in of the Batch A Stream 1 NYSC Corp Members",
   },
   {
     path: "/",
     image: "/images/Image.png",
     date: "27th Aprl, 2025",
-    title: "Swaering-In of the Batch A Stream 1 NYSC Corp Members",
+    title: "swearing-in of the Batch A Stream 1 NYSC Corp Members",
   },
   {
-    path: "/",
+    path: "/latest",
     image: "/images/Image.png",
     date: "27th Aprl, 2025",
-    title: "Swaering-In of the Batch A Stream 1 NYSC Corp Members",
+    title: "swearing-in of the Batch A Stream 1 NYSC Corp Members",
   },
 ];
 
@@ -33,7 +33,8 @@ const LatestNews = () => {
     <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%]">
       {news.map((item, index) => (
         <Link
-          to={item.path}
+          to="/blog/$slug"
+          params={{ slug: item.path.replace("/", "") }}
           key={index}
           className={`flex gap-x-2.5 lg:gap-x-10 w-fit py-2 lg:py-4 ${
             index !== news.length - 1 ? "border-b border-b-brand-gray-200" : ""
@@ -48,7 +49,7 @@ const LatestNews = () => {
             <span className="text-[#39393999] text-[10px] lg:text-xl font-normal leading-[101%]">
               {item.date}
             </span>
-            <p className="line-clamp-2 text-[#393939] font-medium text-[13px] lg:text-[31px]">
+            <p className="capitalize line-clamp-2 text-[#393939] font-medium text-[13px] lg:text-[31px]">
               {item.title}
             </p>
           </div>

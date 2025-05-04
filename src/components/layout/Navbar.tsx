@@ -57,12 +57,12 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Search"
-            className="text-secondary-400 text-[10px] lg:text-base font-normal focus:outline-secondary-100 w-full"
+            className="text-secondary-400 text-[10px] lg:text-base font-normal outline-0 w-full"
           />
           <img src="/icons/search.svg" alt="search_icon" />
         </div>
         <div className="hidden lg:flex">
-          <Switch />
+          <Switch className="cursor-pointer"/>
         </div>
         <div className="flex lg:hidden">
           <button
