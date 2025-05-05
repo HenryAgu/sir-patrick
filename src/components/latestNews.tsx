@@ -16,7 +16,6 @@ const LatestNews = () => {
       </div>
     );
   if (error) return <div> An error occured </div>;
-  console.log(blogs);
 
   return (
     <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%]">

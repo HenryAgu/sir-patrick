@@ -1,11 +1,26 @@
+import { useQuery } from "@tanstack/react-query";
 import SocialMenu from "../shared/socialMenu";
+import { fetchBlog } from "@/lib/fetchBlog";
+import { format, parseISO } from "date-fns";
 
 const HomeHero = () => {
+  const {
+    data: blogs,
+    isLoading,
+    error,
+  } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-fit">
+        <p>Loading...</p>
+      </div>
+    );
+  if (error) return <div> An error occured </div>;
   return (
     <section className="my-5 mb-[-60px] lg:mb-[-100px] w-full">
       <div className="relative w-full h-[207px] lg:h-[574px] rounded-[12px] overflow-hidden">
         <img
-          src="/images/hero.png"
+          src={blogs?.[0]?.mainImage?.asset?.url ?? ""}
           alt="hero_image"
           className="w-full h-full object-cover"
         />
@@ -19,7 +34,7 @@ const HomeHero = () => {
           Latest News
         </p>
         <h1 className="max-w-[480px] text-brand-green-700 font-semibold text-[13px] lg:text-[31px] lg:leading-10 line-clamp-2 mt-[-10px] lg:mt-0">
-          Call-Up letter is out now!! Check your dashboard to download
+          {blogs?.[0]?.title}
         </h1>
         <div className="lg:mt-5 mt-1.5 flex items-center gap-x-5">
           <div className="flex items-center gap-x-[3.93px] lg:gap-x-3">
@@ -33,7 +48,9 @@ const HomeHero = () => {
             </p>
           </div>
           <p className="text-secondary-400 text-[10px] lg:text-base font-normal leading-6">
-            August 20, 2025
+            {blogs?.[0]?.publishedAt
+              ? format(parseISO(blogs?.[0]?.publishedAt), "MMMM d, yyyy")
+              : ""}
           </p>
         </div>
       </div>
