@@ -1,10 +1,6 @@
 import { Comment } from "@/type/type";
-import React from "react";
-interface Props {
-  comments: Comment[];
-}
 
-const CommentSection: React.FC<Props> = () => {
+const CommentSection = () => {
   const comments: Comment[] = [
     {
       id: "1",
