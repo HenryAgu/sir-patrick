@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination";
-import ChannelLink from "../whatsappChannel";
+
 import TelegramChannel from "../telegramChannel";
 
 type BlogPosts = {
