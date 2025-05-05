@@ -1,14 +1,65 @@
 import Comments from "@/components/Blog/comments";
 import TelegramChannel from "@/components/telegramChannel";
 import WhatsappChannel from "@/components/whatsappChannel";
+import { fetchBlogBySlug } from "@/lib/fetchBlog";
+import { PortableText } from "@portabletext/react";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { format, parseISO } from "date-fns";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  //   const { slug } = Route.useParams();
+  const { slug } = Route.useParams();
+
+  const {
+    data: blog,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["blogs", slug],
+    queryFn: () => fetchBlogBySlug(slug),
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-xl font-semibold text-red-500">
+            Error loading blog post
+          </p>
+          <p className="text-base text-gray-500">Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // For Portable Texts
+  const components = {
+    types: {
+      image: ({
+        value,
+      }: {
+        value: { asset?: { url?: string }; alt?: string };
+      }) => (
+        <img
+          src={value.asset?.url ?? ""}
+          alt={value.alt || "Image"}
+          className="my-4 rounded-md w-[650px] h-[350px]"
+        />
+      ),
+    },
+  };
 
   return (
     <main>
@@ -16,7 +67,7 @@ function RouteComponent() {
         {/* Header */}
         <section className="flex flex-col gap-y-3.5 lg:gap-y-5">
           <h1 className="font-semibold text-xl leading-7 lg:text-[39px] text-secondary-800 lg:leading-10">
-            How to secure a good PPA whereever you are posted to for NYSC
+            {blog?.title}
           </h1>
           <div className="flex items-center gap-x-7">
             <div className="flex items-center gap-x-2">
@@ -26,11 +77,14 @@ function RouteComponent() {
                 className="h-[25.82px] w-[25.82px] aspect-square"
               />
               <p className="text-secondary-400 text-[13px] lg:text-sm font-medium leading-6">
-                Sir Patrick
+                {blog?.author?.name}
               </p>
             </div>
             <p className="text-secondary-400 text-[13px] lg:text-sm font-normal leading-6">
-              August 20, 2022 /
+              {blog?.publishedAt
+                ? format(parseISO(blog.publishedAt), "MMMM d, yyyy")
+                : ""}
+              /
               <span className="ml-2 text-brand-green-900 font-medium">
                 32 comments
               </span>
@@ -44,57 +98,11 @@ function RouteComponent() {
         </section>
         {/* body */}
         <section className="flex flex-col gap-y-3.5 lg:gap-y-8 mt-8">
-          <p className="text-secondary-600 font-normal text-sm lg:text-xl leading-[18px] lg:leading-8">
-            Traveling is an enriching experience that opens up new horizons,
-            exposes us to different cultures, and creates memories that last a
-            lifetime. However, traveling can also be stressful and overwhelming,
-            especially if you don't plan and prepare adequately. In this blog
-            article, we'll explore tips and tricks for a memorable journey and
-            how to make the most of your travels.
-          </p>
-          <p className="text-secondary-600 font-normal text-sm lg:text-xl leading-[18px] lg:leading-8">
-            One of the most rewarding aspects of traveling is immersing yourself
-            in the local culture and customs. This includes trying local
-            cuisine, attending cultural events and festivals, and interacting
-            with locals. Learning a few phrases in the local language can also
-            go a long way in making connections and showing respect.
-          </p>
-          <p className="text-secondary-600 font-normal text-sm lg:text-xl leading-[18px] lg:leading-8">
-            While it's essential to leave room for spontaneity and unexpected
-            adventures, having a rough itinerary can help you make the most of
-            your time and budget. Identify the must-see sights and experiences
-            and prioritize them according to your interests and preferences.
-            This will help you avoid overscheduling and ensure that you have
-            time to relax and enjoy your journey.
-          </p>
-          <p className="text-secondary-600 font-normal text-sm lg:text-xl leading-[18px] lg:leading-8">
-            Vitae sapien pellentesque habitant morbi tristique. Luctus venenatis
-            lectus magna fringilla. Nec ullamcorper sit amet risus nullam eget
-            felis. Tincidunt arcu non sodales neque sodales ut etiam sit amet.
-          </p>
+          <PortableText value={blog?.body ?? []} components={components} />
           <div className="lg:py-10 py-5">
             <WhatsappChannel />
           </div>
-          <p className="text-secondary-600 font-normal text-sm lg:text-xl leading-[18px] lg:leading-8">
-            One of the most rewarding aspects of traveling is immersing yourself
-            in the local culture and customs. This includes trying local
-            cuisine, attending cultural events and festivals, and interacting
-            with locals. Learning a few phrases in the local language can also
-            go a long way in making connections and showing respect.
-          </p>
-          <p className="text-secondary-600 font-normal text-sm lg:text-xl leading-[18px] lg:leading-8">
-            While it's essential to leave room for spontaneity and unexpected
-            adventures, having a rough itinerary can help you make the most of
-            your time and budget. Identify the must-see sights and experiences
-            and prioritize them according to your interests and preferences.
-            This will help you avoid overscheduling and ensure that you have
-            time to relax and enjoy your journey.
-          </p>
-          <p className="text-secondary-600 font-normal text-sm lg:text-xl leading-[18px] lg:leading-8">
-            Vitae sapien pellentesque habitant morbi tristique. Luctus venenatis
-            lectus magna fringilla. Nec ullamcorper sit amet risus nullam eget
-            felis. Tincidunt arcu non sodales neque sodales ut etiam sit amet.
-          </p>
+          <PortableText value={blog?.body ?? []} components={components} />
         </section>
         <section className="py-5 lg:py-10">
           <TelegramChannel />
