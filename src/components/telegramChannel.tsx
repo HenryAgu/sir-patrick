@@ -1,10 +1,9 @@
-import { Link } from "@tanstack/react-router";
-
 const TelegramChannel = () => {
   return (
     <section className="lg:w-[75%] w-full mx-auto container lg:mb-20 ">
- <Link
-  to="/"
+ <a
+  href="https://t.me/officialnysccommunity"
+  target="_blank"
   className="bg-brand-green-900 text-white py-2.5 lg:py-5 rounded-[6px] lg:rounded-[12px] flex justify-center items-center gap-x-2.5"
 >
   <span className="flex items-center justify-center gap-x-2.5">
@@ -17,7 +16,7 @@ const TelegramChannel = () => {
       Join Batch “A” 2025 Telegram Group
     </p>
   </span>
-</Link>
+</a>
 
     </section>
   );

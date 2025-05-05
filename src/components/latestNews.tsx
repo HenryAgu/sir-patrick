@@ -9,13 +9,13 @@ interface News {
 
 const news: News[] = [
   {
-    path: "/",
+    path: "/latest",
     image: "/images/Image.png",
     date: "27th Aprl, 2025",
     title: "swearing-in of the Batch A Stream 1 NYSC Corp Members",
   },
   {
-    path: "/",
+    path: "/latest",
     image: "/images/Image.png",
     date: "27th Aprl, 2025",
     title: "swearing-in of the Batch A Stream 1 NYSC Corp Members",

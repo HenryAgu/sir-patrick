@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
 } from "../ui/pagination";
 import ChannelLink from "../whatsappChannel";
+import TelegramChannel from "../telegramChannel";
 
 type BlogPosts = {
   image: string;
@@ -206,7 +207,7 @@ const BlogPost = () => {
         </Pagination>
       </div>
       <div className="py-0 lg:py-10">
-        <ChannelLink />
+        <TelegramChannel />
       </div>
     </section>
   );
