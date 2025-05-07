@@ -13,6 +13,7 @@ import TelegramChannel from "../telegramChannel";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlog } from "@/lib/fetchBlog";
 import { format, parseISO } from "date-fns";
+import { Skeleton } from "../ui/skeleton";
 
 const BlogPost = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,8 +26,8 @@ const BlogPost = () => {
   } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
   if (isLoading)
     return (
-      <div className="flex items-center justify-center h-fit">
-        <p>Loading...</p>
+      <div className="my-0 lg:mt-5 lg:mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <Skeleton className="h-[403px]"/>
       </div>
     );
   if (error) return <div> An error occured </div>;

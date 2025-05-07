@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import SocialMenu from "../shared/socialMenu";
 import { fetchBlog } from "@/lib/fetchBlog";
 import { format, parseISO } from "date-fns";
+import { Skeleton } from "../ui/skeleton";
 
 const HomeHero = () => {
   const {
@@ -11,8 +12,8 @@ const HomeHero = () => {
   } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
   if (isLoading)
     return (
-      <div className="flex items-center justify-center h-fit">
-        <p>Loading...</p>
+      <div className="my-5">
+        <Skeleton className="w-full h-[207px] lg:h-[574px] rounded-[12px]" />
       </div>
     );
   if (error) return <div> An error occured </div>;
