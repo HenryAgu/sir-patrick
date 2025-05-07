@@ -27,7 +27,9 @@ const BlogPost = () => {
   if (isLoading)
     return (
       <div className="my-0 lg:mt-5 lg:mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <Skeleton className="h-[403px]"/>
+        <Skeleton className="h-[350px]"/>
+        <Skeleton className="h-[350px]"/>
+        <Skeleton className="h-[350px]"/>
       </div>
     );
   if (error) return <div> An error occured </div>;

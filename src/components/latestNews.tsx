@@ -2,6 +2,7 @@ import { fetchBlog } from "@/lib/fetchBlog";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
+import { Skeleton } from "./ui/skeleton";
 
 const LatestNews = () => {
   const {
@@ -11,8 +12,14 @@ const LatestNews = () => {
   } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
   if (isLoading)
     return (
-      <div className="flex items-center justify-center h-fit">
-        <p>Loading...</p>
+      <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%]">
+        <div className="flex gap-x-2.5 lg:gap-x-10 w-fit py-2 lg:py-4">
+          <Skeleton className="lg:w-[237px] lg:h-[145px] w-[108px] h-[85px]" />
+          <div className="flex flex-col gap-y-[8.8px] lg:gap-y-[15px]">
+            <Skeleton className="w-full lg:w-[172px] h-5" />
+            <Skeleton className="w-full lg:w-[563px] h-[72px]" />
+          </div>
+        </div>
       </div>
     );
   if (error) return <div> An error occured </div>;
