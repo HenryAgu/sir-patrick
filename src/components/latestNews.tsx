@@ -22,11 +22,31 @@ const LatestNews = () => {
         </div>
       </div>
     );
-  if (error) return <div> An error occured </div>;
+  if (error) {
+    return (
+      <div className="flex flex-col gap-y-3.5 lg:gap-y-5 items-center justify-center min-h-[60vh] text-center px-4 py-10">
+        <h2 className="lg:text-7xl text-4xl font-bold text-black">Oops</h2>
+        <p className="text-sm lg:text-base text-black max-w-md">
+          Something went wrong while loading this blog posts. <br />
+          Sir Patrick might be fine-tuning the wisdom — please try again later
+          or check your internet connection.
+        </p>
+
+        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={() => window.location.reload()}
+            className="px-5 py-2 bg-brand-green-900 cursor-pointer text-white text-sm lg:text-base rounded hover:bg-red-700 transition"
+          >
+            🔁 Reload Page
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%]">
-      {blogs?.map((item, index) => (
+      {blogs?.slice(0, 3)?.map((item, index) => (
         <Link
           to="/blog/$slug"
           params={{ slug: item.slug.current.replace("/", "") }}
