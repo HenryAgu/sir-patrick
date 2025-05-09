@@ -1,6 +1,6 @@
 const TelegramChannel = () => {
   return (
-    <section className="lg:w-[75%] w-full mx-auto container lg:mb-20">
+    <section className="lg:w-[75%] w-full mx-auto container lg:mb-10">
       <a
         href="https://t.me/officialnysccommunity"
         target="_blank"

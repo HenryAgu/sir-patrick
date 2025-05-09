@@ -3,6 +3,7 @@ import SocialMenu from "../shared/socialMenu";
 import { fetchBlog } from "@/lib/fetchBlog";
 import { format, parseISO } from "date-fns";
 import { Skeleton } from "../ui/skeleton";
+import { Link } from "@tanstack/react-router";
 
 const HomeHero = () => {
   const {
@@ -38,7 +39,7 @@ const HomeHero = () => {
           {blogs?.[0]?.title}
         </h1>
         <div className="lg:mt-5 mt-1.5 flex items-center gap-x-5">
-          <div className="flex items-center gap-x-[3.93px] lg:gap-x-3">
+          <Link to="/about" className="flex items-center gap-x-[3.93px] lg:gap-x-3">
             <img
               src="/icons/avatar.svg"
               alt="avatar_icons"
@@ -47,7 +48,7 @@ const HomeHero = () => {
             <p className="text-secondary-400 text-[10px] lg:text-base font-medium leading-6">
               Sir Patrick
             </p>
-          </div>
+          </Link>
           <p className="text-secondary-400 text-[10px] lg:text-base font-normal leading-6">
             {blogs?.[0]?.publishedAt
               ? format(parseISO(blogs?.[0]?.publishedAt), "MMMM d, yyyy")

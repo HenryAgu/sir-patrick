@@ -27,11 +27,11 @@ function RouteComponent() {
   if (isLoading) {
     return (
       <section className="flex flex-col gap-y-3.5 lg:gap-y-5 min-h-screen mx-auto container w-full lg:px-14 xl:px-30 2xl:px-60 py-10 lg:pb-20 px-3.5">
-        <Skeleton className="w-full lg:h-20 h-[37px]"/>
-        <Skeleton className="w-[269px] lg:w-[321px] h-4.5 lg:h-7"/>
-        <Skeleton className="w-full lg:h-[462px] h-[210px]"/>
-        <Skeleton className="w-full lg:h-[144px] h-[106px]"/>
-        <Skeleton className="w-full lg:h-[144px] h-[106px]"/>
+        <Skeleton className="w-full lg:h-20 h-[37px]" />
+        <Skeleton className="w-[269px] lg:w-[321px] h-4.5 lg:h-7" />
+        <Skeleton className="w-full lg:h-[462px] h-[210px]" />
+        <Skeleton className="w-full lg:h-[144px] h-[106px]" />
+        <Skeleton className="w-full lg:h-[144px] h-[106px]" />
       </section>
     );
   }
@@ -103,11 +103,23 @@ function RouteComponent() {
         </section>
         {/* body */}
         <section className="flex flex-col gap-y-3.5 lg:gap-y-8 mt-8">
-          <PortableText value={blog?.body ?? []} components={components} />
+          <PortableText
+            value={blog?.introduction ?? []}
+            components={components}
+          />
+
+          <PortableText value={blog?.firstBody ?? []} components={components} />
           <div className="lg:py-10 py-5">
             <WhatsappChannel />
           </div>
-          <PortableText value={blog?.body ?? []} components={components} />
+          <PortableText
+            value={blog?.secondBody ?? []}
+            components={components}
+          />
+          <PortableText
+            value={blog?.conclusion ?? []}
+            components={components}
+          />
         </section>
         <section className="py-5 lg:py-10">
           <TelegramChannel />

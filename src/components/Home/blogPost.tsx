@@ -90,7 +90,7 @@ const BlogPost = () => {
                   {post.title}
                 </div>
                 <div className="flex items-center gap-x-[18.44px] lg:gap-x-5 lg:mt-2">
-                  <div className="flex items-center gap-x-3">
+                  <Link to="/about" className="flex items-center gap-x-3">
                     <img
                       src="/icons/avatar.svg"
                       alt="avatar_icons"
@@ -99,7 +99,7 @@ const BlogPost = () => {
                     <p className="text-secondary-400 text-[13px] lg:text-sm font-medium leading-6">
                       {post?.author?.name}
                     </p>
-                  </div>
+                  </Link>
                   <p className="text-secondary-400 text-[13px] lg:text-sm font-normal leading-6">
                     {post?.publishedAt
                       ? format(parseISO(post.publishedAt), "MMMM d, yyyy")
@@ -125,20 +125,44 @@ const BlogPost = () => {
               />
             </PaginationItem>
 
-            {Array.from({ length: totalPages }, (_, i) => (
-              <PaginationItem key={i}>
-                <PaginationLink
-                  href="#"
-                  isActive={currentPage === i + 1}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handlePageChange(i + 1);
-                  }}
-                >
-                  {`0${i + 1}`}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+            {[...Array(totalPages)].map((_, i) => {
+              const page = i + 1;
+              const shouldShow =
+                page === 1 ||
+                page === totalPages ||
+                (page >= currentPage - 1 && page <= currentPage + 1);
+
+              const isEllipsisLeft = page === currentPage - 2 && page > 2;
+              const isEllipsisRight =
+                page === currentPage + 2 && page < totalPages - 1;
+
+              if (isEllipsisLeft || isEllipsisRight) {
+                return (
+                  <PaginationItem key={`ellipsis-${page}`}>
+                    <span className="px-2 text-gray-400 select-none">...</span>
+                  </PaginationItem>
+                );
+              }
+
+              if (shouldShow) {
+                return (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      href="#"
+                      isActive={currentPage === page}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(page);
+                      }}
+                    >
+                      {page < 10 ? `0${page}` : page}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              }
+
+              return null;
+            })}
 
             <PaginationItem>
               <PaginationNext

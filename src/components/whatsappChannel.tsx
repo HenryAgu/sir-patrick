@@ -1,6 +1,6 @@
 const WhatsappChannel = () => {
   return (
-    <section className="lg:w-[75%] w-full mx-auto container lg:mb-20 ">
+    <section className="lg:w-[75%] w-full mx-auto container lg:mb-10 ">
       <a
         href="https://whatsapp.com/channel/0029Van5HvY0lwgkt6kuVr2A"
         target="_blank"

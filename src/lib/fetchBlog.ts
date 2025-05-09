@@ -1,4 +1,4 @@
-import { PortableTextBlock } from '@portabletext/react';
+import { PortableTextBlock } from "@portabletext/react";
 import { client } from "./sanity";
 
 export type PostType = {
@@ -27,8 +27,10 @@ export type PostType = {
   }>;
   body: PortableTextBlock[];
   publishedAt: string; // ISO date string
-  description: string;
-  introduction: string;
+  introduction: PortableTextBlock[];
+  firstBody: PortableTextBlock[];
+  secondBody: PortableTextBlock[];
+  conclusion: PortableTextBlock[];
 };
 
 export const fetchBlog = async (): Promise<PostType[]> => {
@@ -57,6 +59,9 @@ export const fetchBlog = async (): Promise<PostType[]> => {
     publishedAt, 
     description, 
     introduction,
+        firstbody,
+    secondBody,
+    conclusion,
 body[]{
     ...,
     _type == "image" => {
@@ -100,6 +105,9 @@ export const fetchBlogBySlug = async (
     publishedAt,
     description,
     introduction,
+    firstbody,
+    secondBody,
+    conclusion,
 body[]{
     ...,
     _type == "image" => {
