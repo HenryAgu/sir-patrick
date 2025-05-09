@@ -14,10 +14,37 @@ function RouteComponent() {
             Contact Us
           </p>
           <p className="font-normal text-xs lg:text-xl leading-[17.5px] lg:leading-[26px] text-brand-gray-500">
-            Meet Jonathan Doe, a passionate writer and blogger with a love for
-            technology and travel. Jonathan holds a degree in Computer Science
-            and has spent years working in the tech industry, gaining a deep
-            understanding of the impact technology has on our lives.
+            We’d love to hear from you!
+          </p>
+          <p className="font-normal text-xs lg:text-xl leading-[17.5px] lg:leading-[26px] text-brand-gray-500">
+            For business inquiries or partnership opportunities, please email us
+            at: {" "}
+            <a
+              href="mailto:onlinenysccommunity@gmail.com"
+              className="text-brand-green-250"
+            >
+              onlinenysccommunity@gmail.com
+            </a>
+          </p>
+          <p className="font-normal text-xs lg:text-xl leading-[17.5px] lg:leading-[26px] text-brand-gray-500">
+            Got questions, want to chat, or stay updated? <br />
+            Join us on:{" "}
+            <a
+              href="https://whatsapp.com/channel/0029Van5HvY0lwgkt6kuVr2A"
+              className="text-brand-green-250"
+            >
+              WhatsApp Channel
+            </a>{" "}
+            or{" "}
+            <a
+              href="https://t.me/officialnysccommunity"
+              className="text-brand-green-250"
+            >
+              Telegram Channel
+            </a>
+          </p>
+          <p className="font-normal text-xs lg:text-xl leading-[17.5px] lg:leading-[26px] text-brand-gray-500">
+            You can also call: +2349068149238
           </p>
           <SocialMenu />
         </div>

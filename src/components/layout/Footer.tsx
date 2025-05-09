@@ -39,8 +39,8 @@ const Footer = () => {
           <div className="flex flex-col gap-y-0.5">
             <p className="text-secondary-800 font-semibold text-[13px]">
               Email :
-              <a href="mailto:info@jstemplate.net" className="font-normal ml-1">
-                info@jstemplate.net
+              <a href="mailto:onlinenysccommunity@gmail.com" className="font-normal ml-1">
+              onlinenysccommunity@gmail.com
               </a>
             </p>
             <p className="text-secondary-800 font-semibold text-[13px]">

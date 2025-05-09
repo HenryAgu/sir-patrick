@@ -12,6 +12,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "../src/lib/fetchBlog.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "../src/lib/fetchBlog.ts", "schemaTypes/_redirects"],
   "exclude": ["node_modules"]
 }
