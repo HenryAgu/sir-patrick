@@ -1,15 +1,14 @@
-import { fetchBlog } from "@/lib/fetchBlog";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
 import { Skeleton } from "./ui/skeleton";
+import { fetchNews } from "@/lib/fetchNews";
 
 const LatestNews = () => {
   const {
-    data: blogs,
+    data: news,
     isLoading,
     error,
-  } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
+  } = useQuery({ queryKey: ["news"], queryFn: fetchNews });
   if (isLoading)
     return (
       <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%]">
@@ -46,19 +45,17 @@ const LatestNews = () => {
 
   return (
     <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%]">
-      {blogs?.slice(0, 3)?.map((item, index) => (
-        <Link
-          to="/blog/$slug"
-          params={{ slug: item.slug.current.replace("/", "") }}
+      {news?.slice(0, 3)?.map((item, index) => (
+        <div
           key={index}
           className={`flex gap-x-2.5 lg:gap-x-10 w-fit py-2 lg:py-4 ${
-            index !== blogs.length - 1 ? "border-b border-b-brand-gray-200" : ""
+            index !== news.length - 1 ? "border-b border-b-brand-gray-200" : ""
           }`}
         >
           <img
             src={item?.mainImage?.asset?.url ?? ""}
             alt="image"
-            className="lg:w-[237px] lg:h-[145px] lg:aspect-[237/145] w-[108px] h-[85px] aspect-[108/85] object-cover lg:object-contain"
+            className="lg:w-[237px] lg:h-[145px] lg:aspect-[237/145] w-[108px] h-[85px] aspect-[108/85] object-cover lg:object-contain rounded-[12px]"
           />
           <div className="flex flex-col gap-y-[8.8px] lg:gap-y-[15px]">
             <span className="text-[#39393999] text-[10px] lg:text-xl font-normal leading-[101%]">
@@ -70,7 +67,7 @@ const LatestNews = () => {
               {item.title}
             </p>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

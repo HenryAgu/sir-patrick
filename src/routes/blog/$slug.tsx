@@ -96,7 +96,7 @@ function RouteComponent() {
             </p>
           </div>
           <img
-            src="/images/blog.png"
+            src={blog?.mainImage?.asset?.url ?? ""}
             alt=""
             className="h-[210px] lg:h-[462px] w-full rounded-[12px]"
           />
