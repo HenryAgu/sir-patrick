@@ -68,7 +68,7 @@ function RouteComponent() {
 
   return (
     <main>
-      <div className="min-h-screen mx-auto container w-full lg:px-14 xl:px-30 2xl:px-60 py-10 lg:pb-20 px-3.5 font-roboto">
+      <div className="min-h-screen mx-auto container w-full lg:px-14 xl:px-30 2xl:px-60 py-10 lg:pb-20 px-3.5 font-roboto select-none">
         {/* Header */}
         <section className="flex flex-col gap-y-3.5 lg:gap-y-5">
           <h1 className="font-semibold text-xl leading-7 lg:text-[39px] text-secondary-800 lg:leading-10">
