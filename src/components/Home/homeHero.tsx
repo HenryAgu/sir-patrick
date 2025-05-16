@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import SocialMenu from "../shared/socialMenu";
-import { fetchBlog } from "@/lib/fetchBlog";
 import { format, parseISO } from "date-fns";
 import { Skeleton } from "../ui/skeleton";
 import { Link } from "@tanstack/react-router";
+import { fetchNews } from "@/lib/fetchNews";
 
 const HomeHero = () => {
   const {
     data: blogs,
     isLoading,
     error,
-  } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
+  } = useQuery({ queryKey: ["news"], queryFn: fetchNews });
   if (isLoading)
     return (
       <div className="my-5">
@@ -22,7 +22,7 @@ const HomeHero = () => {
     <section className="my-5 mb-[-60px] lg:mb-[-100px] w-full">
       <div className="relative w-full h-[207px] lg:h-[574px] rounded-[12px] overflow-hidden">
         <img
-          src={blogs?.[0]?.mainImage?.asset?.url ?? ""}
+          src="/images/hero.png"
           alt="hero_image"
           className="w-full h-full object-cover"
         />

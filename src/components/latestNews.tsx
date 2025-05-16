@@ -44,8 +44,8 @@ const LatestNews = () => {
   }
 
   return (
-    <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%]">
-      {news?.slice(0, 3)?.map((item, index) => (
+    <div className="my-4 lg:my-8 flex flex-col w-full md:w-[70%] h-[90vh] overflow-y-auto">
+      {news?.map((item, index) => (
         <div
           key={index}
           className={`flex gap-x-2.5 lg:gap-x-10 w-fit py-2 lg:py-4 ${
