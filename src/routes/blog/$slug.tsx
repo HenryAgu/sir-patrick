@@ -50,21 +50,43 @@ function RouteComponent() {
   }
 
   // For Portable Texts
-  const components = {
-    types: {
-      image: ({
-        value,
-      }: {
-        value: { asset?: { url?: string }; alt?: string };
-      }) => (
-        <img
-          src={value.asset?.url ?? ""}
-          alt={value.alt || "Image"}
-          className="my-4 rounded-md w-[650px] h-[350px]"
-        />
-      ),
+const components = {
+  types: {
+    image: ({ value }: { value: any }) => {
+      if (!value?.asset) {
+        console.warn('Missing image asset', value);
+        return null;
+      }
+      
+      // Use import.meta.env for Vite
+      const imageUrl = value.asset.url || 
+        `https://cdn.sanity.io/images/${import.meta.env.VITE_SANITY_PROJECT_ID}/${import.meta.env.VITE_SANITY_DATASET}/${
+          value.asset._ref
+            .replace('image-', '')
+            .replace(/-([^-]*)$/, '.$1')
+        }`;
+
+      return (
+        <div className="my-6 flex flex-col items-center">
+          <img
+            src={imageUrl}
+            alt={value.alt || 'Blog image'}
+            className="rounded-lg max-w-full h-auto max-h-[500px] object-contain"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
+          {value.caption && (
+            <p className="text-center text-sm text-gray-500 mt-2">
+              {value.caption}
+            </p>
+          )}
+        </div>
+      );
     },
-  };
+  },
+};
+  console.log(components)
 
   return (
     <main>
