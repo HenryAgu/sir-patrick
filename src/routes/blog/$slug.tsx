@@ -50,43 +50,112 @@ function RouteComponent() {
   }
 
   // For Portable Texts
-const components = {
-  types: {
-    image: ({ value }: { value: any }) => {
-      if (!value?.asset) {
-        console.warn('Missing image asset', value);
-        return null;
-      }
-      
-      // Use import.meta.env for Vite
-      const imageUrl = value.asset.url || 
-        `https://cdn.sanity.io/images/${import.meta.env.VITE_SANITY_PROJECT_ID}/${import.meta.env.VITE_SANITY_DATASET}/${
-          value.asset._ref
-            .replace('image-', '')
-            .replace(/-([^-]*)$/, '.$1')
-        }`;
+  const components = {
+    types: {
+      image: ({ value }: { value: any }) => {
+        if (!value?.asset) {
+          console.warn("Missing image asset", value);
+          return null;
+        }
 
-      return (
-        <div className="my-6 flex flex-col items-center">
-          <img
-            src={imageUrl}
-            alt={value.alt || 'Blog image'}
-            className="rounded-lg max-w-full h-auto max-h-[500px] object-contain"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
-          />
-          {value.caption && (
-            <p className="text-center text-sm text-gray-500 mt-2">
-              {value.caption}
-            </p>
-          )}
-        </div>
-      );
+        const imageUrl =
+          value.asset.url ||
+          `https://cdn.sanity.io/images/${import.meta.env.VITE_SANITY_PROJECT_ID}/${import.meta.env.VITE_SANITY_DATASET}/${value.asset._ref
+            .replace("image-", "")
+            .replace(/-([^-]*)$/, ".$1")}`;
+
+        return (
+          <div className="my-6 flex flex-col items-center">
+            <img
+              src={imageUrl}
+              alt={value.alt || "Blog image"}
+              className="rounded-lg max-w-full h-auto max-h-[500px] object-contain"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
+            />
+            {value.caption && (
+              <p className="text-center text-sm text-gray-500 mt-2">
+                {value.caption}
+              </p>
+            )}
+          </div>
+        );
+      },
     },
-  },
-};
-  console.log(components)
+
+    // Add block styling for paragraphs, headings, etc.
+    block: {
+      normal: ({ children }: { children: any }) => (
+        <p className="my-4 leading-relaxed">{children}</p>
+      ),
+      h1: ({ children }: { children: any }) => (
+        <h1 className="text-3xl font-bold my-6">{children}</h1>
+      ),
+      h2: ({ children }: { children: any }) => (
+        <h2 className="text-2xl font-bold my-5">{children}</h2>
+      ),
+      h3: ({ children }: { children: any }) => (
+        <h3 className="text-xl font-semibold my-4">{children}</h3>
+      ),
+      blockquote: ({ children }: { children: any }) => (
+        <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4">
+          {children}
+        </blockquote>
+      ),
+    },
+
+    // Add list handling for bullet points and numbered lists
+    list: {
+      bullet: ({ children }: { children: any }) => (
+        <ul className="list-disc pl-8 space-y-2 my-4">{children}</ul>
+      ),
+      number: ({ children }: { children: any }) => (
+        <ol className="list-decimal pl-8 space-y-2 my-4">{children}</ol>
+      ),
+    },
+    listItem: {
+      bullet: ({ children }: { children: any }) => (
+        <li className="leading-relaxed">{children}</li>
+      ),
+      number: ({ children }: { children: any }) => (
+        <li className="leading-relaxed">{children}</li>
+      ),
+    },
+
+    // Add text formatting options
+    marks: {
+      strong: ({ children }: { children: any }) => (
+        <strong className="font-bold">{children}</strong>
+      ),
+      em: ({ children }: { children: any }) => (
+        <em className="italic">{children}</em>
+      ),
+      underline: ({ children }: { children: any }) => (
+        <u className="underline">{children}</u>
+      ),
+      code: ({ children }: { children: any }) => (
+        <code className="font-mono bg-gray-100 px-1 py-0.5 rounded text-sm">
+          {children}
+        </code>
+      ),
+      link: ({ value, children }: { value: any; children: any }) => {
+        const target = (value?.href || "").startsWith("http")
+          ? "_blank"
+          : undefined;
+        return (
+          <a
+            href={value?.href}
+            target={target}
+            rel={target === "_blank" ? "noopener noreferrer" : undefined}
+            className="text-blue-600 hover:underline"
+          >
+            {children}
+          </a>
+        );
+      },
+    },
+  };
 
   return (
     <main>

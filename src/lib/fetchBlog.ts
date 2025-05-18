@@ -59,7 +59,7 @@ export const fetchBlog = async (): Promise<PostType[]> => {
     publishedAt, 
     description, 
     introduction,
-        firstbody,
+        firstBody,
     secondBody,
     conclusion,
 body[]{
@@ -105,7 +105,7 @@ export const fetchBlogBySlug = async (
     publishedAt,
     description,
     introduction,
-    firstbody,
+    firstBody,
     secondBody,
     conclusion,
 body[]{
