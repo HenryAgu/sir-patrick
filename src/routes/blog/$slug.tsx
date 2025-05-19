@@ -160,7 +160,7 @@ const components: PortableTextComponents = {
                 : ""}
               /
               <span className="ml-2 text-brand-green-900 font-medium">
-                32 comments
+                0 comments
               </span>
             </p>
           </div>

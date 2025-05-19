@@ -17,13 +17,14 @@ import { Skeleton } from "../ui/skeleton";
 
 const BlogPost = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6;
+  const postsPerPage = 9;
 
   const {
     data: blogs,
     isLoading,
     error,
   } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
+  
   if (isLoading)
     return (
       <div className="my-0 lg:mt-5 lg:mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -32,6 +33,7 @@ const BlogPost = () => {
         <Skeleton className="h-[350px]" />
       </div>
     );
+  
   if (error) {
     return (
       <div className="flex flex-col gap-y-3.5 lg:gap-y-5 items-center justify-center min-h-[60vh] text-center px-4 py-10">
@@ -54,7 +56,8 @@ const BlogPost = () => {
     );
   }
 
-  const totalPages = Math.ceil(blogs?.length ?? 0 / postsPerPage);
+  // Calculate total pages based on postsPerPage (4)
+  const totalPages = Math.ceil((blogs?.length || 0) / postsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -112,70 +115,72 @@ const BlogPost = () => {
         })}
       </div>
 
-      <div className="flex justify-center my-10">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handlePageChange(currentPage - 1);
-                }}
-              />
-            </PaginationItem>
+      {totalPages > 1 && (
+        <div className="flex justify-center my-10">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageChange(currentPage - 1);
+                  }}
+                />
+              </PaginationItem>
 
-            {[...Array(totalPages)].map((_, i) => {
-              const page = i + 1;
-              const shouldShow =
-                page === 1 ||
-                page === totalPages ||
-                (page >= currentPage - 1 && page <= currentPage + 1);
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                const shouldShow =
+                  page === 1 ||
+                  page === totalPages ||
+                  Math.abs(page - currentPage) <= 1;
 
-              const isEllipsisLeft = page === currentPage - 2 && page > 2;
-              const isEllipsisRight =
-                page === currentPage + 2 && page < totalPages - 1;
+                const isEllipsisLeft = page === currentPage - 2 && page > 2;
+                const isEllipsisRight =
+                  page === currentPage + 2 && page < totalPages - 1;
 
-              if (isEllipsisLeft || isEllipsisRight) {
-                return (
-                  <PaginationItem key={`ellipsis-${page}`}>
-                    <span className="px-2 text-gray-400 select-none">...</span>
-                  </PaginationItem>
-                );
-              }
+                if (isEllipsisLeft || isEllipsisRight) {
+                  return (
+                    <PaginationItem key={`ellipsis-${page}`}>
+                      <span className="px-2 text-gray-400 select-none">...</span>
+                    </PaginationItem>
+                  );
+                }
 
-              if (shouldShow) {
-                return (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      href="#"
-                      isActive={currentPage === page}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handlePageChange(page);
-                      }}
-                    >
-                      {page < 10 ? `0${page}` : page}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              }
+                if (shouldShow) {
+                  return (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === page}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handlePageChange(page);
+                        }}
+                      >
+                        {page < 10 ? `0${page}` : page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
 
-              return null;
-            })}
+                return null;
+              })}
 
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handlePageChange(currentPage + 1);
-                }}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageChange(currentPage + 1);
+                  }}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
+      
       <div className="py-0 lg:py-10">
         <TelegramChannel />
       </div>
