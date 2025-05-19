@@ -69,7 +69,7 @@ const BlogPost = () => {
   const displayedPosts = blogs?.slice(startIndex, startIndex + postsPerPage);
 
   return (
-    <section className="lg:mb-20 mb-10 mt-10 md:px-10 lg:px-0">
+    <section className="lg:mb-20 mb-10 mt-10 lg:mt-20 md:px-10 lg:px-0">
       <p className="text-secondary-800 text-2xl font-bold font-roboto hidden lg:block">
         Blog Post
       </p>
