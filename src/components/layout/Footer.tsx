@@ -32,15 +32,18 @@ const Footer = () => {
             About
           </p>
           <p className="text-secondary-500 font-normal text-[13px] max-w-[260px] hidden lg:block">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam
+            Join a Community That Gets You Connect with fellow PCMs, ask
+            questions, share experiences, and get helpful, real-time answers
+            from people who’ve been there.
           </p>
           <div className="flex flex-col gap-y-0.5">
             <p className="text-secondary-800 font-semibold text-[13px]">
               Email :
-              <a href="mailto:onlinenysccommunity@gmail.com" className="font-normal ml-1">
-              onlinenysccommunity@gmail.com
+              <a
+                href="mailto:onlinenysccommunity@gmail.com"
+                className="font-normal ml-1"
+              >
+                onlinenysccommunity@gmail.com
               </a>
             </p>
             <p className="text-secondary-800 font-semibold text-[13px]">
@@ -90,7 +93,9 @@ const Footer = () => {
                 className="h-auto w-auto"
               />
             </div>
-            <button className="bg-brand-green-900 py-[9px] px-[15px] rounded-[4.5px] text-xs text-white font-medium font-work-sans">Subscribe</button>
+            <button className="bg-brand-green-900 py-[9px] px-[15px] rounded-[4.5px] text-xs text-white font-medium font-work-sans">
+              Subscribe
+            </button>
           </div>
         </div>
       </div>
