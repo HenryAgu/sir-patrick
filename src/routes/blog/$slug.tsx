@@ -85,12 +85,12 @@ const components: PortableTextComponents = {
   },
 
   block: {
-    normal: ({ children }) => <p className="my-4 leading-relaxed">{children}</p>,
-    h1: ({ children }) => <h1 className="text-3xl font-bold my-6">{children}</h1>,
-    h2: ({ children }) => <h2 className="text-2xl font-bold my-5">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-xl font-semibold my-4">{children}</h3>,
+    normal: ({ children }) => <p className="">{children}</p>,
+    h1: ({ children }) => <h1 className="text-3xl font-bold">{children}</h1>,
+    h2: ({ children }) => <h2 className="text-2xl font-bold">{children}</h2>,
+    h3: ({ children }) => <h3 className="text-xl font-semibold">{children}</h3>,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4">
+      <blockquote className="border-l-4 border-gray-300 pl-4 italic">
         {children}
       </blockquote>
     ),
@@ -98,16 +98,16 @@ const components: PortableTextComponents = {
 
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc pl-8 space-y-2 my-4">{children}</ul>
+      <ul className="list-disc pl-8 space-y-2">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal pl-8 space-y-2 my-4">{children}</ol>
+      <ol className="list-decimal pl-8 space-y-2">{children}</ol>
     ),
   },
 
   listItem: {
-    bullet: ({ children }) => <li className="leading-relaxed">{children}</li>,
-    number: ({ children }) => <li className="leading-relaxed">{children}</li>,
+    bullet: ({ children }) => <li className="">{children}</li>,
+    number: ({ children }) => <li className="">{children}</li>,
   },
 
   marks: {
@@ -131,7 +131,7 @@ const components: PortableTextComponents = {
           {children}
         </a>
       );
-    }) as PortableTextMarkComponent, // Explicit type assertion here
+    }) as PortableTextMarkComponent,
   },
 };
 
@@ -194,7 +194,7 @@ const components: PortableTextComponents = {
           <TelegramChannel />
         </section>
       </div>
-      <Comments />
+      {/* <Comments /> */}
     </main>
   );
 }
