@@ -63,7 +63,7 @@ const LatestNews = () => {
                 ? format(parseISO(item.publishedAt), "MMMM d, yyyy")
                 : ""}
             </span>
-            <p className="capitalize line-clamp-2 text-[#393939] font-medium text-[13px] lg:text-[31px]">
+            <p className="capitalize text-[#393939] font-medium text-[13px] lg:text-[31px]">
               {item.title}
             </p>
           </div>
