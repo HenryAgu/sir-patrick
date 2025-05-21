@@ -76,7 +76,7 @@ const BlogPost = () => {
   const filteredPosts = displayedPosts?.filter((item) => {
     return searchBlog.toLocaleLowerCase() === ""
       ? item
-      : item?.title.toLocaleLowerCase().includes(searchBlog);
+      : item?.title.toLocaleLowerCase().includes(searchBlog.toLocaleLowerCase());
   });
 
   return (
