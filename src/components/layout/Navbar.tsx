@@ -9,9 +9,8 @@ type NavMenu = {
 };
 
 const Navbar = () => {
-  const {searchBlog, setSearchBlog} = useContext(SearchContext);
+  const {setSearchBlog} = useContext(SearchContext);
 
-  console.log(searchBlog);
 
   const navMenu: NavMenu[] = [
     { title: "Home", path: "/" },
@@ -58,7 +57,7 @@ const Navbar = () => {
         ))}
       </ul>
       <div className="flex items-center gap-x-2.5 lg:gap-x-7.5">
-        <div className="flex items-center gap-x-3 bg-brand-green-200 border border-brand-gray-400 lg:border-secondary-100 lg:bg-secondary-100 p-2 pl-4 rounded-[17px] lg:rounded-[5px] w-[100px] lg:w-full">
+        <div className="flex items-center gap-x-3 bg-brand-green-200 border border-brand-gray-400 lg:border-secondary-100 lg:bg-secondary-100 p-2 pl-4 rounded-[17px] lg:rounded-[5px] w-[150px] lg:w-full">
           <input
             type="text"
             placeholder="Search"

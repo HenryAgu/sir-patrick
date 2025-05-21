@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   Pagination,
@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBlog } from "@/lib/fetchBlog";
 import { format, parseISO } from "date-fns";
 import { Skeleton } from "../ui/skeleton";
+import { SearchContext } from "@/contexts/SearchContext";
 
 const BlogPost = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +25,7 @@ const BlogPost = () => {
     isLoading,
     error,
   } = useQuery({ queryKey: ["blogs"], queryFn: fetchBlog });
-  
+
   if (isLoading)
     return (
       <div className="my-0 lg:mt-5 lg:mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -33,7 +34,7 @@ const BlogPost = () => {
         <Skeleton className="h-[350px]" />
       </div>
     );
-  
+
   if (error) {
     return (
       <div className="flex flex-col gap-y-3.5 lg:gap-y-5 items-center justify-center min-h-[60vh] text-center px-4 py-10">
@@ -56,6 +57,9 @@ const BlogPost = () => {
     );
   }
 
+  // search from context
+  const { searchBlog } = useContext(SearchContext);
+
   // Calculate total pages based on postsPerPage (4)
   const totalPages = Math.ceil((blogs?.length || 0) / postsPerPage);
 
@@ -68,6 +72,13 @@ const BlogPost = () => {
   const startIndex = (currentPage - 1) * postsPerPage;
   const displayedPosts = blogs?.slice(startIndex, startIndex + postsPerPage);
 
+  // filtered blog posts
+  const filteredPosts = displayedPosts?.filter((item) => {
+    return searchBlog.toLocaleLowerCase() === ""
+      ? item
+      : item?.title.toLocaleLowerCase().includes(searchBlog);
+  });
+
   return (
     <section className="lg:mb-20 mb-10 mt-10 lg:mt-20 md:px-10 lg:px-0">
       <p className="text-secondary-800 text-2xl font-bold font-roboto hidden lg:block">
@@ -75,7 +86,7 @@ const BlogPost = () => {
       </p>
 
       <div className="mt-0 lg:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {displayedPosts?.map((post, index) => {
+        {filteredPosts?.map((post, index) => {
           return (
             <Link
               to="/blog/$slug"
@@ -129,43 +140,47 @@ const BlogPost = () => {
                 />
               </PaginationItem>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                const shouldShow =
-                  page === 1 ||
-                  page === totalPages ||
-                  Math.abs(page - currentPage) <= 1;
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => {
+                  const shouldShow =
+                    page === 1 ||
+                    page === totalPages ||
+                    Math.abs(page - currentPage) <= 1;
 
-                const isEllipsisLeft = page === currentPage - 2 && page > 2;
-                const isEllipsisRight =
-                  page === currentPage + 2 && page < totalPages - 1;
+                  const isEllipsisLeft = page === currentPage - 2 && page > 2;
+                  const isEllipsisRight =
+                    page === currentPage + 2 && page < totalPages - 1;
 
-                if (isEllipsisLeft || isEllipsisRight) {
-                  return (
-                    <PaginationItem key={`ellipsis-${page}`}>
-                      <span className="px-2 text-gray-400 select-none">...</span>
-                    </PaginationItem>
-                  );
+                  if (isEllipsisLeft || isEllipsisRight) {
+                    return (
+                      <PaginationItem key={`ellipsis-${page}`}>
+                        <span className="px-2 text-gray-400 select-none">
+                          ...
+                        </span>
+                      </PaginationItem>
+                    );
+                  }
+
+                  if (shouldShow) {
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href="#"
+                          isActive={currentPage === page}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handlePageChange(page);
+                          }}
+                        >
+                          {page < 10 ? `0${page}` : page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  }
+
+                  return null;
                 }
-
-                if (shouldShow) {
-                  return (
-                    <PaginationItem key={page}>
-                      <PaginationLink
-                        href="#"
-                        isActive={currentPage === page}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handlePageChange(page);
-                        }}
-                      >
-                        {page < 10 ? `0${page}` : page}
-                      </PaginationLink>
-                    </PaginationItem>
-                  );
-                }
-
-                return null;
-              })}
+              )}
 
               <PaginationItem>
                 <PaginationNext
@@ -180,7 +195,7 @@ const BlogPost = () => {
           </Pagination>
         </div>
       )}
-      
+
       <div className="py-0 lg:py-10">
         <TelegramChannel />
       </div>
