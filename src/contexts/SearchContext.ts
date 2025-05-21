@@ -1,3 +1,11 @@
 import { createContext } from "react";
 
-export const SearchContext = createContext({})
+interface SearchContextType {
+  searchBlog: string;
+  setSearchBlog: (value: string) => void;
+}
+
+export const SearchContext = createContext<SearchContextType>({
+  searchBlog: '',
+  setSearchBlog: () => {},
+});

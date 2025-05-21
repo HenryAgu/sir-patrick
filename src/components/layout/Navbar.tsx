@@ -1,12 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SearchContext } from "@/contexts/SearchContext";
+
+type NavMenu = {
+  title: string;
+  path: string;
+};
 
 const Navbar = () => {
-  type NavMenu = {
-    title: string;
-    path: string;
-  };
+  const {searchBlog, setSearchBlog} = useContext(SearchContext);
+
+  console.log(searchBlog);
 
   const navMenu: NavMenu[] = [
     { title: "Home", path: "/" },
@@ -58,6 +63,9 @@ const Navbar = () => {
             type="text"
             placeholder="Search"
             className="text-secondary-400 text-[10px] lg:text-base font-normal outline-0 w-full"
+            onChange={(e)=>{
+              setSearchBlog(e.target.value);
+            }}
           />
           <img src="/icons/search.svg" alt="search_icon" />
         </div>
