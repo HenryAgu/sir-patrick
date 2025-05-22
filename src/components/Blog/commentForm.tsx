@@ -1,8 +1,59 @@
-const CommentForm = () => {
+import { Comment } from "@/type/type";
+import { FormEvent, useState } from "react";
+
+interface CommentSectionProps {
+  comments: Comment[];
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+}
+
+const CommentForm = ({ setComments, comments }: CommentSectionProps) => {
+  const [formData, setFormData] = useState({
+    message: "",
+    name: "",
+    email: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // submit comments
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Add comments to existing comments
+    const { message, name, email } = formData;
+    if (!message.trim() || !name.trim() || !email.trim()) return;
+
+    const newComment = {
+      id: Date.now().toString(),
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim(),
+      timestamp: new Date().toISOString(),
+    };
+
+    setComments([...comments, newComment]);
+
+    // Reset the form fields
+    setFormData({ message: "", name: "", email: "" });
+  };
+
   return (
-    <form className="my-8 flex flex-col gap-y-[9px] lg:gap-y-4.5">
+    <form
+      className="my-8 flex flex-col gap-y-[9px] lg:gap-y-4.5"
+      onSubmit={handleSubmit}
+    >
       <textarea
         name="message"
+        value={formData.message}
+        onChange={handleChange}
         id=""
         className="resize-none h-[140px] lg:h-[309px] bg-white rounded-[10px] px-2.5 py-4.5 lg:px-5 lg:py-10 text-secondary-600 text-sm lg:text-xl lg:leading-8 font-normal border-[0.45px] border-brand-gray-100"
         placeholder="Type here"
@@ -10,15 +61,20 @@ const CommentForm = () => {
       />
       <input
         type="text"
-        name="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
         className="bg-white rounded-[10px] px-2.5 py-4.5 lg:px-5 lg:py-10 text-secondary-600 text-sm lg:text-xl lg:leading-8 font-normal border-[0.45px] border-brand-gray-100"
         placeholder="Name*"
         required
       />
       <input
         type="email"
+        name="email"
         className="bg-white rounded-[10px] px-2.5 py-4.5 lg:px-5 lg:py-10 text-secondary-600 text-sm lg:text-xl lg:leading-8 font-normal border-[0.45px] border-brand-gray-100"
         placeholder="Email*"
+        value={formData.email}
+        onChange={handleChange}
         required
       />
       <div className="flex items-center gap-x-2 lg:gap-x-4 mb-5 lg:mb-10">

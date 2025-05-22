@@ -1,4 +1,4 @@
-// import Comments from "@/components/Blog/comments";
+import Comments from "@/components/Blog/comments";
 import TelegramChannel from "@/components/telegramChannel";
 import { Skeleton } from "@/components/ui/skeleton";
 import WhatsappChannel from "@/components/whatsappChannel";
@@ -194,7 +194,7 @@ const components: PortableTextComponents = {
           <TelegramChannel />
         </section>
       </div>
-      {/* <Comments /> */}
+      <Comments />
     </main>
   );
 }

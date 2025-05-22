@@ -1,7 +1,8 @@
 export interface Comment {
     id: string;
-    author: string;
+    name: string;
     message: string;
+    email: string;
     timestamp: string;
     replyTo?: string;
   }
