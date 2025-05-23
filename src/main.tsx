@@ -4,7 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { routeTree } from "./routeTree.gen";
 import QueryClientProviderWrapper from "./components/QueryWrapper";
-import { SearchProvider } from "./contexts/SearchProvider";
+import { GlobalProvider } from "./contexts/GlobalProvider";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -22,11 +22,11 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <SearchProvider>
+      <GlobalProvider>
         <QueryClientProviderWrapper>
           <RouterProvider router={router} />
         </QueryClientProviderWrapper>
-      </SearchProvider>
+      </GlobalProvider>
     </StrictMode>
   );
 }

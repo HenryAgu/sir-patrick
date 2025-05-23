@@ -2,11 +2,13 @@ import Comments from "@/components/Blog/comments";
 import TelegramChannel from "@/components/telegramChannel";
 import { Skeleton } from "@/components/ui/skeleton";
 import WhatsappChannel from "@/components/whatsappChannel";
+import { CommentContext } from "@/contexts/CommentContext";
 import { fetchBlogBySlug } from "@/lib/fetchBlog";
 import { PortableText, type PortableTextComponents, type PortableTextMarkComponent } from '@portabletext/react';
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
+import { useContext } from "react";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: RouteComponent,
@@ -135,6 +137,9 @@ const components: PortableTextComponents = {
   },
 };
 
+// For number of comments
+  const { comments } = useContext(CommentContext);
+
   return (
     <main>
       <div className="min-h-screen mx-auto container w-full lg:px-14 xl:px-30 2xl:px-60 pt-10 lg:pb-20 px-3.5 font-roboto select-none">
@@ -160,7 +165,7 @@ const components: PortableTextComponents = {
                 : ""}
               /
               <span className="ml-2 text-brand-green-900 font-medium">
-                0 comments
+                {comments.length} comments
               </span>
             </p>
           </div>
