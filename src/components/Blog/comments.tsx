@@ -19,7 +19,7 @@ const Comments = () => {
         </span>
       </div>
       <CommentForm setComments={setComments}/>
-      <CommentSection comments={comments} setComments={setComments}/>
+      <CommentSection  />
     </section>
   );
 };

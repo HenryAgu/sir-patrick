@@ -1,32 +1,63 @@
+import { useEffect } from "react";
 import supabase from "@/lib/supabase-client";
 import { Comment } from "@/type/type";
 import { format, parseISO } from "date-fns";
-import { useEffect } from "react";
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 
-interface CommentSectionProps {
-  comments: Comment[];
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
-}
+const CommentSection = () => {
+  const queryClient = useQueryClient();
 
-const CommentSection = ({ comments, setComments }: CommentSectionProps) => {
-  useEffect(() => {
-    fetchComments();
-  }, []);
-
-  const fetchComments = async () => {
+  const fetchComments = async (): Promise<Comment[]> => {
     const { data, error } = await supabase.from("CommentList").select("*");
     if (error) {
-      console.error("There is an error", error);
-      toast.error("Failed to add comment");
-    } else if (data) {
-      setComments(data);
+      toast.error("Failed to fetch comments");
+      throw new Error(error.message);
     }
+    return data;
   };
+
+  const {
+    data: commentList = [],
+    isLoading,
+    isError,
+  }: UseQueryResult<Comment[]> = useQuery({
+    queryKey: ["comments"],
+    queryFn: fetchComments,
+  });
+
+  // Realtime subscription setup
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime-comments")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "CommentList",
+        },
+        (payload) => {
+          console.log("New comment received:", payload.new);
+          queryClient.invalidateQueries({ queryKey: ["comments"] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
 
   return (
     <div className="space-y-8 lg:p-4 font-roboto">
-      {comments.map((comment) => (
+      {isLoading && <p>Loading comments...</p>}
+      {isError && <p>Error loading comments</p>}
+      {commentList.map((comment) => (
         <div
           key={comment.id}
           className="border-t border-brand-gray-400 pt-10 lg:pt-14"
@@ -45,7 +76,7 @@ const CommentSection = ({ comments, setComments }: CommentSectionProps) => {
         </div>
       ))}
       <div className="flex justify-center items-center my-14">
-        <button className="border border-brand-green-150 text-brand-green-250 p-2.5 lg:px-5 lg:py-4 rounded-[10px] text-xs cursor-pointer lg:text-base  bg-white">
+        <button className="border border-brand-green-150 text-brand-green-250 p-2.5 lg:px-5 lg:py-4 rounded-[10px] text-xs cursor-pointer lg:text-base bg-white">
           Read more comment
         </button>
       </div>
