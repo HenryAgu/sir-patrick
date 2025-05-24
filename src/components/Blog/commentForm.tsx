@@ -1,7 +1,7 @@
 import supabase from "@/lib/supabase-client";
 import { Comment } from "@/type/type";
 import { FormEvent, useState } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 interface CommentSectionProps {
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
@@ -106,7 +106,6 @@ const CommentForm = ({ setComments }: CommentSectionProps) => {
       >
         {loading ? "Submitting..." : "Post comment"}
       </button>
-      <Toaster />
     </form>
   );
 };

@@ -5,6 +5,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import QueryClientProviderWrapper from "./components/QueryWrapper";
 import { GlobalProvider } from "./contexts/GlobalProvider";
+import { Toaster } from "sonner";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -27,6 +28,7 @@ if (!rootElement.innerHTML) {
           <RouterProvider router={router} />
         </QueryClientProviderWrapper>
       </GlobalProvider>
+      <Toaster/>
     </StrictMode>
   );
 }

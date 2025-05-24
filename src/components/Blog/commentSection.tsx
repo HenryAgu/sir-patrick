@@ -1,12 +1,28 @@
+import supabase from "@/lib/supabase-client";
 import { Comment } from "@/type/type";
 import { format, parseISO } from "date-fns";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 interface CommentSectionProps {
   comments: Comment[];
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
 }
 
-const CommentSection = ({ comments }: CommentSectionProps) => {
+const CommentSection = ({ comments, setComments }: CommentSectionProps) => {
+  useEffect(() => {
+    fetchComments();
+  }, []);
 
+  const fetchComments = async () => {
+    const { data, error } = await supabase.from("CommentList").select("*");
+    if (error) {
+      console.error("There is an error", error);
+      toast.error("Failed to add comment");
+    } else if (data) {
+      setComments(data);
+    }
+  };
 
   return (
     <div className="space-y-8 lg:p-4 font-roboto">
