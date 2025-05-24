@@ -32,7 +32,7 @@ const Comments = () => {
           Your email and other personal details is not made visible.
         </span>
       </div>
-      <CommentForm comments={comments} setComments={setComments}/>
+      <CommentForm setComments={setComments}/>
       <CommentSection comments={comments}/>
     </section>
   );

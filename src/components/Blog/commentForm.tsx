@@ -1,12 +1,14 @@
+import supabase from "@/lib/supabase-client";
 import { Comment } from "@/type/type";
 import { FormEvent, useState } from "react";
+import { Toaster, toast } from "sonner";
 
 interface CommentSectionProps {
-  comments: Comment[];
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
 }
 
-const CommentForm = ({ setComments, comments }: CommentSectionProps) => {
+const CommentForm = ({ setComments }: CommentSectionProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     message: "",
     name: "",
@@ -24,25 +26,36 @@ const CommentForm = ({ setComments, comments }: CommentSectionProps) => {
   };
 
   // submit comments
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Add comments to existing comments
     const { message, name, email } = formData;
     if (!message.trim() || !name.trim() || !email.trim()) return;
 
+    setLoading(true); 
+
     const newComment = {
-      id: Date.now().toString(),
       name: name.trim(),
       email: email.trim(),
       message: message.trim(),
       timestamp: new Date().toISOString(),
     };
 
-    setComments([...comments, newComment]);
+    const { data, error } = await supabase
+      .from("CommentList")
+      .insert([newComment])
+      .select()
+      .single();
 
-    // Reset the form fields
-    setFormData({ message: "", name: "", email: "" });
+    if (error) {
+      console.error("There is an error", error);
+      toast.error("Failed to add comment");
+    } else if (data) {
+      setComments((prev) => [...prev, data]);
+      setFormData({ message: "", name: "", email: "" });
+      toast.success("Comment added!");
+    }
+    setLoading(false);
   };
 
   return (
@@ -86,9 +99,14 @@ const CommentForm = ({ setComments, comments }: CommentSectionProps) => {
           Notify me of any response
         </span>
       </div>
-      <button className="bg-brand-green-900 w-fit py-3.5 lg:py-5 px-5 lg:px-11 rounded-[6px] lg:rounded-[12px] text-center text-white text-sm lg:text-[31px] font-normal cursor-pointer transition duration-200 ease-in hover:opacity-50">
-        Post comment
+      <button
+      disabled={loading}
+        type="submit"
+        className="bg-brand-green-900 w-fit py-3.5 lg:py-5 px-5 lg:px-11 rounded-[6px] lg:rounded-[12px] text-center text-white text-sm lg:text-[31px] font-normal cursor-pointer transition duration-200 ease-in hover:opacity-50"
+      >
+        {loading ? "Submitting..." : "Post comment"}
       </button>
+      <Toaster />
     </form>
   );
 };
