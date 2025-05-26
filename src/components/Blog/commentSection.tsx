@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import supabase from "@/lib/supabase-client";
 import { Comment } from "@/type/type";
 import { format, parseISO } from "date-fns";
@@ -60,11 +60,19 @@ const CommentSection = ({ slug }: SlugProps) => {
     };
   }, [queryClient]);
 
+  const [visibleCommentsCount, setVisibleCommentsCount] = useState<number>(4);
+
+  const handleLoadMoreComments = async () => {
+    setVisibleCommentsCount((prev) => prev + 4);
+  };
+
+  const visibleComment = commentList.slice(0, visibleCommentsCount);
+
   return (
     <div className="space-y-8 lg:p-4 font-roboto">
       {isLoading && <p>Loading comments...</p>}
       {isError && <p>Error loading comments</p>}
-      {commentList.map((comment) => (
+      {visibleComment.map((comment) => (
         <div
           key={comment.id}
           className="border-t border-brand-gray-400 pt-10 lg:pt-14"
@@ -82,11 +90,13 @@ const CommentSection = ({ slug }: SlugProps) => {
           </p>
         </div>
       ))}
-      {/* <div className="flex justify-center items-center my-14">
-        <button className="border border-brand-green-150 text-brand-green-250 p-2.5 lg:px-5 lg:py-4 rounded-[10px] text-xs cursor-pointer lg:text-base bg-white">
-          Read more comment
-        </button>
-      </div> */}
+      {visibleCommentsCount < commentList.length && (
+        <div className="flex justify-center items-center my-14">
+          <button type="button" onClick={handleLoadMoreComments} className="border border-brand-green-150 text-brand-green-250 p-2.5 lg:px-5 lg:py-4 rounded-[10px] text-xs cursor-pointer lg:text-base bg-white">
+            Read more comment
+          </button>
+        </div>
+      )}
     </div>
   );
 };
