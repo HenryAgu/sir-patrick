@@ -5,6 +5,5 @@ export interface Comment {
     email: string;
     timestamp: string;
     replyTo?: string;
-    slug: string;
   }
   
