@@ -3,6 +3,8 @@
 
 Welcome to the **Sir Patrick NYSC Blog**, a web platform designed to provide helpful guides, personal experiences, and valuable resources for Nigerian youths undergoing the NYSC (National Youth Service Corps) journey.
 
+![image](https://github.com/user-attachments/assets/583ddd2f-d1ad-4ada-b2d0-84ab67c5e9f8)
+
 ---
 
 ## 📌 Features
