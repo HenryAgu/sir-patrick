@@ -9,11 +9,18 @@ import {
 } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const CommentSection = () => {
+interface SlugProps {
+  slug: string;
+}
+
+const CommentSection = ({ slug }: SlugProps) => {
   const queryClient = useQueryClient();
 
-  const fetchComments = async (): Promise<Comment[]> => {
-    const { data, error } = await supabase.from("CommentList").select("*");
+  const fetchComments = async (slug: string): Promise<Comment[]> => {
+    const { data, error } = await supabase
+      .from("CommentList")
+      .select("*")
+      .eq("slug", slug);
     if (error) {
       toast.error("Failed to fetch comments");
       throw new Error(error.message);
@@ -26,8 +33,8 @@ const CommentSection = () => {
     isLoading,
     isError,
   }: UseQueryResult<Comment[]> = useQuery({
-    queryKey: ["comments"],
-    queryFn: fetchComments,
+    queryKey: ["comments", slug],
+    queryFn: () => fetchComments(slug),
   });
 
   // Realtime subscription setup
@@ -75,11 +82,11 @@ const CommentSection = () => {
           </p>
         </div>
       ))}
-      <div className="flex justify-center items-center my-14">
+      {/* <div className="flex justify-center items-center my-14">
         <button className="border border-brand-green-150 text-brand-green-250 p-2.5 lg:px-5 lg:py-4 rounded-[10px] text-xs cursor-pointer lg:text-base bg-white">
           Read more comment
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

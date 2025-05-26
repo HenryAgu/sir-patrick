@@ -5,9 +5,10 @@ import { toast } from "sonner";
 
 interface CommentSectionProps {
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  slug: string;
 }
 
-const CommentForm = ({ setComments }: CommentSectionProps) => {
+const CommentForm = ({ setComments, slug }: CommentSectionProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     message: "",
@@ -32,9 +33,10 @@ const CommentForm = ({ setComments }: CommentSectionProps) => {
     const { message, name, email } = formData;
     if (!message.trim() || !name.trim() || !email.trim()) return;
 
-    setLoading(true); 
+    setLoading(true);
 
     const newComment = {
+      slug: slug,
       name: name.trim(),
       email: email.trim(),
       message: message.trim(),
@@ -100,7 +102,7 @@ const CommentForm = ({ setComments }: CommentSectionProps) => {
         </span>
       </div>
       <button
-      disabled={loading}
+        disabled={loading}
         type="submit"
         className="bg-brand-green-900 w-fit py-3.5 lg:py-5 px-5 lg:px-11 rounded-[6px] lg:rounded-[12px] text-center text-white text-sm lg:text-[31px] font-normal cursor-pointer transition duration-200 ease-in hover:opacity-50"
       >

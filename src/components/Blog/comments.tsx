@@ -3,11 +3,13 @@ import CommentForm from "./commentForm";
 import CommentSection from "./commentSection";
 import { Comment } from "@/type/type";
 
-const Comments = () => {
-  const [comments, setComments] = useState<Comment[]>([
+interface SlugProps {
+  slug: string;
+}
 
-  ])
-  console.log(comments)
+const Comments = ({ slug }: SlugProps) => {
+  const [comments, setComments] = useState<Comment[]>([]);
+  console.log(comments);
 
   return (
     <section className="mx-auto container w-full font-roboto bg-brand-green-100 py-10 lg:pt-20 lg:pb-24 lg:px-14 xl:px-30 2xl:px-60 px-3.5 flex flex-col gap-y-18">
@@ -19,8 +21,8 @@ const Comments = () => {
           Your email and other personal details is not made visible.
         </span>
       </div>
-      <CommentForm setComments={setComments}/>
-      <CommentSection  />
+      <CommentForm setComments={setComments} slug={slug} />
+      <CommentSection slug={slug}/>
     </section>
   );
 };

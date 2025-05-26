@@ -4,7 +4,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import WhatsappChannel from "@/components/whatsappChannel";
 import { fetchBlogBySlug } from "@/lib/fetchBlog";
 import supabase from "@/lib/supabase-client";
-import { PortableText, type PortableTextComponents, type PortableTextMarkComponent } from '@portabletext/react';
+import {
+  PortableText,
+  type PortableTextComponents,
+  type PortableTextMarkComponent,
+} from "@portabletext/react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
@@ -27,7 +31,10 @@ function RouteComponent() {
   });
 
   const fetchComments = async (): Promise<Comment[]> => {
-    const { data, error } = await supabase.from("CommentList").select("*");
+    const { data, error } = await supabase
+      .from("CommentList")
+      .select("*")
+      .eq("slug", slug);
     if (error) {
       toast.error("Failed to fetch comments");
       throw new Error(error.message);
@@ -35,9 +42,7 @@ function RouteComponent() {
     return data;
   };
 
-  const {
-    data: commentList = [],
-  }: UseQueryResult<Comment[]> = useQuery({
+  const { data: commentList = [] }: UseQueryResult<Comment[]> = useQuery({
     queryKey: ["comments"],
     queryFn: fetchComments,
   });
@@ -76,7 +81,9 @@ function RouteComponent() {
       normal: ({ children }) => <p>{children}</p>,
       h1: ({ children }) => <h1 className="text-3xl font-bold">{children}</h1>,
       h2: ({ children }) => <h2 className="text-2xl font-bold">{children}</h2>,
-      h3: ({ children }) => <h3 className="text-xl font-semibold">{children}</h3>,
+      h3: ({ children }) => (
+        <h3 className="text-xl font-semibold">{children}</h3>
+      ),
       blockquote: ({ children }) => (
         <blockquote className="border-l-4 border-gray-300 pl-4 italic">
           {children}
@@ -96,7 +103,9 @@ function RouteComponent() {
       number: ({ children }) => <li>{children}</li>,
     },
     marks: {
-      strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+      strong: ({ children }) => (
+        <strong className="font-bold">{children}</strong>
+      ),
       em: ({ children }) => <em className="italic">{children}</em>,
       underline: ({ children }) => <u className="underline">{children}</u>,
       code: ({ children }) => (
@@ -105,7 +114,9 @@ function RouteComponent() {
         </code>
       ),
       link: (({ value, children }) => {
-        const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
+        const target = (value?.href || "").startsWith("http")
+          ? "_blank"
+          : undefined;
         return (
           <a
             href={value?.href}
@@ -136,7 +147,9 @@ function RouteComponent() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="text-center">
-          <p className="text-xl font-semibold text-red-500">Error loading blog post</p>
+          <p className="text-xl font-semibold text-red-500">
+            Error loading blog post
+          </p>
           <p className="text-base text-gray-500">Please try again later.</p>
         </div>
       </div>
@@ -175,25 +188,33 @@ function RouteComponent() {
           <img
             src={blog?.mainImage?.asset?.url ?? ""}
             alt=""
-            className="h-[210px] lg:h-[462px] w-full rounded-[12px]"
+            className="h-[210px] md:h-[350px] lg:h-[462px] w-full rounded-[12px]"
           />
         </section>
         {/* body */}
         <section className="flex flex-col gap-y-3.5 lg:gap-y-8 mt-8">
-          <PortableText value={blog?.introduction ?? []} components={components} />
+          <PortableText
+            value={blog?.introduction ?? []}
+            components={components}
+          />
           <PortableText value={blog?.firstBody ?? []} components={components} />
           <div className="lg:py-10 py-5">
             <WhatsappChannel />
           </div>
-          <PortableText value={blog?.secondBody ?? []} components={components} />
-          <PortableText value={blog?.conclusion ?? []} components={components} />
+          <PortableText
+            value={blog?.secondBody ?? []}
+            components={components}
+          />
+          <PortableText
+            value={blog?.conclusion ?? []}
+            components={components}
+          />
         </section>
         <section className="py-5 lg:py-10">
           <TelegramChannel />
         </section>
       </div>
-      <Comments />
+      <Comments slug={slug} />
     </main>
   );
 }
-
