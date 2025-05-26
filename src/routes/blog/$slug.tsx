@@ -181,7 +181,7 @@ function RouteComponent() {
                 : ""}
               /
               <span className="ml-2 text-brand-green-900 font-medium">
-                {commentList?.length} comments
+                {commentList?.length} {commentList?.length > 1 ? "comments": "comment"}
               </span>
             </p>
           </div>
