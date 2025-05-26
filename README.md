@@ -96,7 +96,7 @@ if (error) return (
 
 If you encounter any issues or have suggestions, feel free to reach out:
 
-📧 Email: [info@sirpatricknysc.com](mailto:info@sirpatricknysc.com)
+📧 Email: [onlinenysccommunity@gmail.com](mailto:onlinenysccommunity@gmail.com)
 
 ---
 
