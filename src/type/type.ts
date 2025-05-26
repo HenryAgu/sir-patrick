@@ -5,6 +5,6 @@ export interface Comment {
     email: string;
     timestamp: string;
     replyTo?: string;
-    blogId: string;
+    slug: string;
   }
   
