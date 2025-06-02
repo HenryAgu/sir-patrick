@@ -30,6 +30,7 @@ function RouteComponent() {
     queryFn: () => fetchBlogBySlug(slug),
   });
 
+  // Fetch Comments
   const fetchComments = async (): Promise<Comment[]> => {
     const { data, error } = await supabase
       .from("CommentList")
@@ -178,10 +179,11 @@ function RouteComponent() {
             <p className="text-secondary-400 text-[13px] lg:text-sm font-normal leading-6">
               {blog?.publishedAt
                 ? format(parseISO(blog.publishedAt), "MMMM d, yyyy")
-                : ""}
+                : ""}{" "}
               /
               <span className="ml-2 text-brand-green-900 font-medium">
-                {commentList?.length} {commentList?.length > 1 ? "comments": "comment"}
+                {commentList?.length}{" "}
+                {commentList?.length > 1 ? "comments" : "comment"}
               </span>
             </p>
           </div>
