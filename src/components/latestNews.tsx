@@ -54,6 +54,7 @@ const LatestNews = () => {
         >
           <img
             src={item?.mainImage?.asset?.url ?? ""}
+            loading="lazy"
             alt="image"
             className="lg:w-[237px] lg:h-[145px] lg:aspect-[237/145] w-[108px] h-[85px] aspect-[108/85] object-cover lg:object-contain rounded-[12px]"
           />

@@ -96,6 +96,7 @@ const BlogPost = () => {
             >
               <img
                 src={post?.mainImage?.asset?.url ?? ""}
+                loading="lazy"
                 alt={post.title}
                 className="w-full h-[170px] lg:h-[221.3px] rounded-[6px] aspect-[332/170] lg:aspect-[332/221.3]"
               />

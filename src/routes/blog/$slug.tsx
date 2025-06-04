@@ -189,6 +189,7 @@ function RouteComponent() {
           </div>
           <img
             src={blog?.mainImage?.asset?.url ?? ""}
+            loading="lazy"
             alt=""
             className="h-[210px] md:h-[350px] lg:h-[462px] w-full rounded-[12px]"
           />

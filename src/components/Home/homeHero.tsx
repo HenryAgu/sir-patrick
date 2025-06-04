@@ -23,6 +23,7 @@ const HomeHero = () => {
         <div className="relative w-full h-[207px] lg:h-[574px] rounded-[12px] overflow-hidden">
           <img
             src="/images/hero.png"
+            loading="lazy"
             alt="hero_image"
             className="w-full h-full object-cover"
           />
