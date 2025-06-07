@@ -22,7 +22,7 @@ const HomeHero = () => {
       <section className="my-5 mb-[-60px] lg:mb-[-100px] w-full">
         <div className="relative w-full h-[207px] lg:h-[574px] rounded-[12px] overflow-hidden">
           <img
-            src="/images/hero.png"
+            src="/images/hero.webp"
             loading="lazy"
             alt="hero_image"
             className="w-full h-full object-cover"
@@ -64,7 +64,7 @@ const HomeHero = () => {
     <section className="my-5 mb-[-60px] lg:mb-[-100px] w-full">
       <div className="relative w-full h-[207px] lg:h-[574px] rounded-[12px] overflow-hidden">
         <img
-          src="/images/hero.png"
+          src="/images/hero.webp"
           alt="hero_image"
           className="w-full h-full object-cover"
         />
