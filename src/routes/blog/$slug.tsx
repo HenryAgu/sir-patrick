@@ -3,16 +3,14 @@ import TelegramChannel from "@/components/telegramChannel";
 import { Skeleton } from "@/components/ui/skeleton";
 import WhatsappChannel from "@/components/whatsappChannel";
 import { fetchBlogBySlug } from "@/lib/fetchBlog";
-import supabase from "@/lib/supabase-client";
 import {
   PortableText,
   type PortableTextComponents,
   type PortableTextMarkComponent,
 } from "@portabletext/react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: RouteComponent,
@@ -30,32 +28,18 @@ function RouteComponent() {
     queryFn: () => fetchBlogBySlug(slug),
   });
 
-  // Fetch Comments
-  const fetchComments = async (): Promise<Comment[]> => {
-    const { data, error } = await supabase
-      .from("CommentList")
-      .select("*")
-      .eq("slug", slug);
-    if (error) {
-      toast.error("Failed to fetch comments");
-      throw new Error(error.message);
-    }
-    return data;
-  };
-
-  const { data: commentList = [] }: UseQueryResult<Comment[]> = useQuery({
-    queryKey: ["comments"],
-    queryFn: fetchComments,
-  });
-
   const components: PortableTextComponents = {
     types: {
       image: ({ value }: { value?: any }) => {
         if (!value?.asset) return null;
 
+        const ref = value.asset._ref;
+        const url = value.asset.url;
+        if (!url && !ref) return null;
+
         const imageUrl =
-          value.asset.url ||
-          `https://cdn.sanity.io/images/${import.meta.env.VITE_SANITY_PROJECT_ID}/${import.meta.env.VITE_SANITY_DATASET}/${value.asset._ref
+          url ||
+          `https://cdn.sanity.io/images/${import.meta.env.VITE_SANITY_PROJECT_ID}/${import.meta.env.VITE_SANITY_DATASET}/${ref
             .replace("image-", "")
             .replace(/-([^-]*)$/, ".$1")}`;
 
@@ -181,10 +165,10 @@ function RouteComponent() {
                 ? format(parseISO(blog.publishedAt), "MMMM d, yyyy")
                 : ""}{" "}
               /
-              <span className="ml-2 text-brand-green-900 font-medium">
+              {/* <span className="ml-2 text-brand-green-900 font-medium">
                 {commentList?.length}{" "}
                 {commentList?.length > 1 ? "comments" : "comment"}
-              </span>
+              </span> */}
             </p>
           </div>
           <img
