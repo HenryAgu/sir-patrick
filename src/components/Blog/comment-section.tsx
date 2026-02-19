@@ -1,5 +1,6 @@
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import Spinner from "../ui/spinner";
 
 interface CommentSectionProps {
   slug: string;
@@ -9,13 +10,17 @@ const CommentSection = ({ slug }: CommentSectionProps) => {
   const comments = useQuery(api.comments.getComments, { articleSlug: slug });
 
   if (!comments) {
-    return <p>Loading...</p>;
+    return <Spinner size="lg" />;
   }
 
-  if (comments.length === 0){
-    return(
-      <p>Empty comments</p>
-    )
+  if (comments.length === 0) {
+    return (
+      <div className="border border-brand-gray-100 rounded-[10px] py-14 bg-brand-green-300 mx-5">
+        <p className="text-secondary-600 text-2xl text-center font-bold">
+          No comments yet!
+        </p>
+      </div>
+    );
   }
 
   return (

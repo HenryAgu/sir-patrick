@@ -18,6 +18,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
     formState: { errors },
     reset,
   } = useForm<CommentFormData>({
+    // @ts-ignore - TypeScript is having trouble inferring the type of the resolver
     resolver: zodResolver(CommentSchema),
   });
 
@@ -41,7 +42,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
         <textarea
           {...register("comment")}
           className={`border ${
-            errors.comment ? "border-red-500" : "border-[#D4DED3]"
+            errors.comment ? "border-red-500" : "border-brand-gray-100"
           } resize-none bg-white h-[309px] rounded-[10px] px-4 lg:px-6 py-[35px] text-secondary-600 text-xl font-normal`}
           placeholder="Type here"
         />
@@ -58,7 +59,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
           type="text"
           {...register("name")}
           className={`border ${
-            errors.name ? "border-red-500" : "border-[#D4DED3]"
+            errors.name ? "border-red-500" : "border-brand-gray-100"
           } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-lg lg:text-xl font-normal`}
           placeholder="Name *"
         />
@@ -75,7 +76,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
           type="text"
           {...register("email")}
           className={`border ${
-            errors.email ? "border-red-500" : "border-[#D4DED3]"
+            errors.email ? "border-red-500" : "border-brand-gray-100"
           } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-lg lg:text-xl font-normal`}
           placeholder="Email *"
         />
