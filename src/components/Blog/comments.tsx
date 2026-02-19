@@ -18,7 +18,7 @@ const Comments = ({ slug }: SlugProps) => {
       </div>
       <div className="flex flex-col gap-y-25 max-w-full lg:max-w-[800px]">
         <CommentForm slug={slug} />
-        <CommentSection />
+        <CommentSection slug={slug} />
       </div>
     </section>
   );
