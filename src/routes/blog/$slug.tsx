@@ -3,17 +3,14 @@ import TelegramChannel from "@/components/telegramChannel";
 import { Skeleton } from "@/components/ui/skeleton";
 import WhatsappChannel from "@/components/whatsappChannel";
 import { fetchBlogBySlug } from "@/lib/fetchBlog";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import {
   PortableText,
   type PortableTextComponents,
   type PortableTextMarkComponent,
 } from "@portabletext/react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: RouteComponent,
@@ -29,37 +26,6 @@ function RouteComponent() {
   } = useQuery({
     queryKey: ["blogs", slug],
     queryFn: () => fetchBlogBySlug(slug),
-  });
-
-  // Fetch Comments
-  const fetchComments = async (): Promise<Comment[]> => {
-    try {
-      const q = query(
-        collection(db, "CommentList"),
-        where("slug", "==", slug),
-        orderBy("timestamp", "desc")
-      );
-      const snapshot = await getDocs(q);
-      return snapshot.docs.map((doc) => {
-        const data = doc.data() as any;
-        const ts = data.timestamp?.toDate ? data.timestamp.toDate().toISOString() : (data.timestamp ?? new Date().toISOString());
-        return {
-          id: doc.id,
-          name: data.name,
-          message: data.message,
-          email: data.email,
-          timestamp: ts,
-        } as unknown as Comment;
-      });
-    } catch (err: any) {
-      toast.error("Failed to fetch comments");
-      throw new Error(err?.message || "Failed to fetch comments");
-    }
-  };
-
-  const { data: commentList = [] }: UseQueryResult<Comment[]> = useQuery({
-    queryKey: ["comments", slug],
-    queryFn: fetchComments,
   });
 
   const components: PortableTextComponents = {
@@ -199,10 +165,10 @@ function RouteComponent() {
                 ? format(parseISO(blog.publishedAt), "MMMM d, yyyy")
                 : ""}{" "}
               /
-              <span className="ml-2 text-brand-green-900 font-medium">
+              {/* <span className="ml-2 text-brand-green-900 font-medium">
                 {commentList?.length}{" "}
                 {commentList?.length > 1 ? "comments" : "comment"}
-              </span>
+              </span> */}
             </p>
           </div>
           <img
