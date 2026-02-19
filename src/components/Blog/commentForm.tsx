@@ -1,112 +1,97 @@
-import supabase from "@/lib/supabase-client";
-import { Comment } from "@/type/type";
-import { FormEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CommentFormData, CommentSchema } from "../schemas/comment.schema";
+import { useMutation } from "convex/react";
 import { toast } from "sonner";
+import { api } from "../../../convex/_generated/api";
 
 interface CommentSectionProps {
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   slug: string;
 }
 
-const CommentForm = ({ setComments, slug }: CommentSectionProps) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
-    message: "",
-    name: "",
-    email: "",
+const CommentForm = ({ slug }: CommentSectionProps) => {
+  const createComment = useMutation(api.comments.createComment);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CommentFormData>({
+    // @ts-ignore - TypeScript is having trouble inferring the type of the resolver
+    resolver: zodResolver(CommentSchema),
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // submit comments
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const { message, name, email } = formData;
-    if (!message.trim() || !name.trim() || !email.trim()) return;
-
-    setLoading(true);
-
-    const newComment = {
-      slug: slug,
-      name: name.trim(),
-      email: email.trim(),
-      message: message.trim(),
-      timestamp: new Date().toISOString(),
-    };
-
-    const { data, error } = await supabase
-      .from("CommentList")
-      .insert([newComment])
-      .select()
-      .single();
-
-    if (error) {
-      console.error("There is an error", error);
-      toast.error("Failed to add comment");
-    } else if (data) {
-      setComments((prev) => [...prev, data]);
-      setFormData({ message: "", name: "", email: "" });
-      toast.success("Comment added!");
+  const onSubmit = async (data: CommentFormData) => {
+    try {
+      await createComment({ ...data, articleSlug: slug });
+      toast.success("Your comment has been added!");
+      reset();
+    } catch (error) {
+      toast.error("Failed to add comment. Please try again.");
     }
-    setLoading(false);
   };
 
   return (
     <form
-      className="my-8 flex flex-col gap-y-[9px] lg:gap-y-4.5"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-y-4 lg:gap-y-8"
     >
-      <textarea
-        name="message"
-        value={formData.message}
-        onChange={handleChange}
-        id=""
-        className="resize-none h-[140px] lg:h-[309px] bg-white rounded-[10px] px-2.5 py-4.5 lg:px-5 lg:py-10 text-secondary-600 text-sm lg:text-xl lg:leading-8 font-normal border-[0.45px] border-brand-gray-100"
-        placeholder="Type here"
-        required
-      />
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        className="bg-white rounded-[10px] px-2.5 py-4.5 lg:px-5 lg:py-10 text-secondary-600 text-sm lg:text-xl lg:leading-8 font-normal border-[0.45px] border-brand-gray-100"
-        placeholder="Name*"
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        className="bg-white rounded-[10px] px-2.5 py-4.5 lg:px-5 lg:py-10 text-secondary-600 text-sm lg:text-xl lg:leading-8 font-normal border-[0.45px] border-brand-gray-100"
-        placeholder="Email*"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <div className="flex items-center gap-x-2 lg:gap-x-4 mb-5 lg:mb-10">
-        <input
-          type="checkbox"
-          className="lg:w-[18px] lg:h-[18px] w-[10px] h-[10px] border border-black rounded-sm bg-white checked:border-transparent focus:outline-none"
+      {/* Comment */}
+      <div className="flex flex-col">
+        <textarea
+          {...register("comment")}
+          className={`border ${
+            errors.comment ? "border-red-500" : "border-brand-gray-100"
+          } resize-none bg-white h-[309px] rounded-[10px] px-4 lg:px-6 py-[35px] text-secondary-600 text-xl font-normal`}
+          placeholder="Type here"
         />
-        <span className="text-secondary-600 text-xs lg:text-xl leading-8 font-normal">
-          Notify me of any response
-        </span>
+        {errors.comment && (
+          <span className="text-red-500 text-sm mt-1">
+            {errors.comment.message}
+          </span>
+        )}
       </div>
+
+      {/* Name */}
+      <div className="flex flex-col">
+        <input
+          type="text"
+          {...register("name")}
+          className={`border ${
+            errors.name ? "border-red-500" : "border-brand-gray-100"
+          } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-lg lg:text-xl font-normal`}
+          placeholder="Name *"
+        />
+        {errors.name && (
+          <span className="text-red-500 text-sm mt-1">
+            {errors.name.message}
+          </span>
+        )}
+      </div>
+
+      {/* Email */}
+      <div className="flex flex-col">
+        <input
+          type="text"
+          {...register("email")}
+          className={`border ${
+            errors.email ? "border-red-500" : "border-brand-gray-100"
+          } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-lg lg:text-xl font-normal`}
+          placeholder="Email *"
+        />
+        {errors.email && (
+          <span className="text-red-500 text-sm mt-1">
+            {errors.email.message}
+          </span>
+        )}
+      </div>
+
       <button
-        disabled={loading}
         type="submit"
-        className="bg-brand-green-900 w-fit py-3.5 lg:py-5 px-5 lg:px-11 rounded-[6px] lg:rounded-[12px] text-center text-white text-sm lg:text-[31px] font-normal cursor-pointer transition duration-200 ease-in hover:opacity-50"
+        className="cursor-pointer lg:w-fit bg-green-900 px-11.5 py-2.5 rounded-[12px] text-white font-roboto font-normal text-lg lg:text-[31px]"
       >
-        {loading ? "Submitting..." : "Post comment"}
+        Post comment
       </button>
     </form>
   );

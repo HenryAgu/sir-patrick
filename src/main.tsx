@@ -5,6 +5,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import QueryClientProviderWrapper from "./components/QueryWrapper";
 import { GlobalProvider } from "./contexts/GlobalProvider";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { Toaster } from "sonner";
 
 // Create a new router instance
@@ -25,10 +26,12 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <GlobalProvider>
         <QueryClientProviderWrapper>
-          <RouterProvider router={router} />
+          <ConvexProvider client={new ConvexReactClient(import.meta.env.VITE_CONVEX_URL)}>
+            <RouterProvider router={router} />
+          </ConvexProvider>
         </QueryClientProviderWrapper>
       </GlobalProvider>
-      <Toaster/>
-    </StrictMode>
+      <Toaster />
+    </StrictMode>,
   );
 }

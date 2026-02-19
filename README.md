@@ -29,6 +29,7 @@ Welcome to the **Sir Patrick NYSC Blog**, a web platform designed to provide hel
 | **Tailwind CSS**   | Utility-first styling                |
 | **React Query**    | Data fetching & caching              |
 | **TypeScript**     | Type-safe development                |
+| **Convex**         | Database                             |
 
 ---
 
