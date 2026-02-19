@@ -4,7 +4,7 @@ interface CommentSectionProps {
 
 const CommentForm = ({ slug }: CommentSectionProps) => {
   return (
-    <form className="flex flex-col gap-y-4 lg:gap-y-8 lg:max-w-[800px]">
+    <form className="flex flex-col gap-y-4 lg:gap-y-8 ">
       {/* Comment message */}
       <textarea
         name="comment"

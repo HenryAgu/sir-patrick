@@ -1,3 +1,4 @@
+import CommentSection from "./comment-section";
 import CommentForm from "./commentForm";
 
 interface SlugProps {
@@ -5,7 +6,6 @@ interface SlugProps {
 }
 
 const Comments = ({ slug }: SlugProps) => {
-
   return (
     <section className="mx-auto container w-full font-roboto bg-brand-green-100 py-10 lg:pt-20 lg:pb-24 lg:px-14 xl:px-30 2xl:px-60 px-3.5 flex flex-col gap-y-[35px]">
       <div className="flex flex-col gap-y-1 lg:gap-y-2">
@@ -16,7 +16,10 @@ const Comments = ({ slug }: SlugProps) => {
           Your email and other personal details is not made visible.
         </span>
       </div>
-      <CommentForm slug={slug} />
+      <div className="flex flex-col gap-y-25 max-w-full lg:max-w-[800px]">
+        <CommentForm slug={slug} />
+        <CommentSection />
+      </div>
     </section>
   );
 };
