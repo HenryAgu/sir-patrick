@@ -3,7 +3,8 @@ import TelegramChannel from "@/components/telegramChannel";
 import { Skeleton } from "@/components/ui/skeleton";
 import WhatsappChannel from "@/components/whatsappChannel";
 import { fetchBlogBySlug } from "@/lib/fetchBlog";
-import supabase from "@/lib/supabase-client";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import {
   PortableText,
   type PortableTextComponents,
@@ -32,19 +33,32 @@ function RouteComponent() {
 
   // Fetch Comments
   const fetchComments = async (): Promise<Comment[]> => {
-    const { data, error } = await supabase
-      .from("CommentList")
-      .select("*")
-      .eq("slug", slug);
-    if (error) {
+    try {
+      const q = query(
+        collection(db, "CommentList"),
+        where("slug", "==", slug),
+        orderBy("timestamp", "desc")
+      );
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map((doc) => {
+        const data = doc.data() as any;
+        const ts = data.timestamp?.toDate ? data.timestamp.toDate().toISOString() : (data.timestamp ?? new Date().toISOString());
+        return {
+          id: doc.id,
+          name: data.name,
+          message: data.message,
+          email: data.email,
+          timestamp: ts,
+        } as unknown as Comment;
+      });
+    } catch (err: any) {
       toast.error("Failed to fetch comments");
-      throw new Error(error.message);
+      throw new Error(err?.message || "Failed to fetch comments");
     }
-    return data;
   };
 
   const { data: commentList = [] }: UseQueryResult<Comment[]> = useQuery({
-    queryKey: ["comments"],
+    queryKey: ["comments", slug],
     queryFn: fetchComments,
   });
 
@@ -53,9 +67,13 @@ function RouteComponent() {
       image: ({ value }: { value?: any }) => {
         if (!value?.asset) return null;
 
+        const ref = value.asset._ref;
+        const url = value.asset.url;
+        if (!url && !ref) return null;
+
         const imageUrl =
-          value.asset.url ||
-          `https://cdn.sanity.io/images/${import.meta.env.VITE_SANITY_PROJECT_ID}/${import.meta.env.VITE_SANITY_DATASET}/${value.asset._ref
+          url ||
+          `https://cdn.sanity.io/images/${import.meta.env.VITE_SANITY_PROJECT_ID}/${import.meta.env.VITE_SANITY_DATASET}/${ref
             .replace("image-", "")
             .replace(/-([^-]*)$/, ".$1")}`;
 

@@ -95,8 +95,8 @@ const HomeHero = () => {
             </p>
           </Link>
           <p className="text-secondary-400 text-[10px] lg:text-base font-normal leading-6">
-            {blogs?.[0]?.publishedAt
-              ? format(parseISO(blogs?.[0]?.publishedAt), "MMMM d, yyyy")
+            {blogs?.[1]?.publishedAt
+              ? format(parseISO(blogs?.[1]?.publishedAt), "MMMM d, yyyy")
               : ""}
           </p>
         </div>

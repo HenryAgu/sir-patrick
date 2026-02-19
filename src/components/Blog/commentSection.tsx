@@ -1,33 +1,47 @@
-import { useEffect, useState } from "react";
-import supabase from "@/lib/supabase-client";
+"use client";
+
+import { useState } from "react";
 import { Comment } from "@/type/type";
 import { format, parseISO } from "date-fns";
-import {
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 interface SlugProps {
   slug: string;
 }
 
 const CommentSection = ({ slug }: SlugProps) => {
-  const queryClient = useQueryClient();
-
+  // Fetch comments for a specific slug
   const fetchComments = async (slug: string): Promise<Comment[]> => {
-    const { data, error } = await supabase
-      .from("CommentList")
-      .select("*")
-      .eq("slug", slug);
-    if (error) {
+    try {
+      const q = query(
+        collection(db, "CommentList"),
+        where("slug", "==", slug),
+        orderBy("timestamp", "desc")
+      );
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map((doc) => {
+        const data = doc.data() as any;
+        const ts = data.timestamp?.toDate
+          ? data.timestamp.toDate().toISOString()
+          : data.timestamp ?? new Date().toISOString();
+        return {
+          id: doc.id,
+          name: data.name,
+          message: data.message,
+          email: data.email,
+          timestamp: ts,
+        } as Comment;
+      });
+    } catch (err: any) {
       toast.error("Failed to fetch comments");
-      throw new Error(error.message);
+      throw new Error(err?.message || "Failed to fetch comments");
     }
-    return data;
   };
 
+  // Query with React Query
   const {
     data: commentList = [],
     isLoading,
@@ -37,42 +51,24 @@ const CommentSection = ({ slug }: SlugProps) => {
     queryFn: () => fetchComments(slug),
   });
 
-  // Realtime subscription setup
-  useEffect(() => {
-    const channel = supabase
-      .channel("realtime-comments")
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "CommentList",
-        },
-        (payload) => {
-          console.log("New comment received:", payload.new);
-          queryClient.invalidateQueries({ queryKey: ["comments"] });
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [queryClient]);
-
+  // Pagination: show 4 comments at a time
   const [visibleCommentsCount, setVisibleCommentsCount] = useState<number>(4);
 
-  const handleLoadMoreComments = async () => {
+  const handleLoadMoreComments = () => {
     setVisibleCommentsCount((prev) => prev + 4);
   };
 
-  const visibleComment = commentList.slice(0, visibleCommentsCount);
+  const visibleComments = commentList.slice(0, visibleCommentsCount);
 
   return (
     <div className="space-y-8 lg:p-4 font-roboto">
       {isLoading && <p>Loading comments...</p>}
       {isError && <p>Error loading comments</p>}
-      {visibleComment.map((comment) => (
+      {!isLoading && commentList.length === 0 && (
+        <p className="text-center text-secondary-600">No comments yet.</p>
+      )}
+
+      {visibleComments.map((comment) => (
         <div
           key={comment.id}
           className="border-t border-brand-gray-400 pt-10 lg:pt-14"
@@ -90,10 +86,15 @@ const CommentSection = ({ slug }: SlugProps) => {
           </p>
         </div>
       ))}
+
       {visibleCommentsCount < commentList.length && (
         <div className="flex justify-center items-center my-14">
-          <button type="button" onClick={handleLoadMoreComments} className="border border-brand-green-150 text-brand-green-250 p-2.5 lg:px-5 lg:py-4 rounded-[10px] text-xs cursor-pointer lg:text-base bg-white">
-            Read more comment
+          <button
+            type="button"
+            onClick={handleLoadMoreComments}
+            className="border border-brand-green-150 text-brand-green-250 p-2.5 lg:px-5 lg:py-4 rounded-[10px] text-xs cursor-pointer lg:text-base bg-white"
+          >
+            Read more comments
           </button>
         </div>
       )}

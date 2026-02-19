@@ -76,7 +76,9 @@ const BlogPost = () => {
   const filteredPosts = displayedPosts?.filter((item) => {
     return searchBlog.toLocaleLowerCase() === ""
       ? item
-      : item?.title.toLocaleLowerCase().includes(searchBlog.toLocaleLowerCase());
+      : item?.title
+          .toLocaleLowerCase()
+          .includes(searchBlog.toLocaleLowerCase());
   });
 
   return (
@@ -180,7 +182,7 @@ const BlogPost = () => {
                   }
 
                   return null;
-                }
+                },
               )}
 
               <PaginationItem>
