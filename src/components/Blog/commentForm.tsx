@@ -15,7 +15,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
     reset,
   } = useForm<CommentFormData>({
     // @ts-ignore - TypeScript is having trouble inferring the type of the resolver
@@ -43,7 +43,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
           {...register("comment")}
           className={`border ${
             errors.comment ? "border-red-500" : "border-brand-gray-100"
-          } resize-none bg-white h-[309px] rounded-[10px] px-4 lg:px-6 py-[35px] text-secondary-600 text-xl font-normal`}
+          } resize-none bg-white h-[200px] lg:h-[309px] rounded-[10px] px-4 lg:px-6 py-4 lg:py-[35px] text-secondary-600 text-base lg:text-xl font-normal`}
           placeholder="Type here"
         />
         {errors.comment && (
@@ -60,7 +60,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
           {...register("name")}
           className={`border ${
             errors.name ? "border-red-500" : "border-brand-gray-100"
-          } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-lg lg:text-xl font-normal`}
+          } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-base lg:text-xl font-normal`}
           placeholder="Name *"
         />
         {errors.name && (
@@ -77,7 +77,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
           {...register("email")}
           className={`border ${
             errors.email ? "border-red-500" : "border-brand-gray-100"
-          } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-lg lg:text-xl font-normal`}
+          } bg-white h-14 lg:h-[110px] rounded-[10px] px-4 lg:px-6 py-3 text-secondary-600 text-base lg:text-xl font-normal`}
           placeholder="Email *"
         />
         {errors.email && (
@@ -89,6 +89,7 @@ const CommentForm = ({ slug }: CommentSectionProps) => {
 
       <button
         type="submit"
+        disabled={isLoading}
         className="cursor-pointer lg:w-fit bg-green-900 px-11.5 py-2.5 rounded-[12px] text-white font-roboto font-normal text-lg lg:text-[31px]"
       >
         Post comment

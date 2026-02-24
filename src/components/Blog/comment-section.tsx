@@ -24,17 +24,17 @@ const CommentSection = ({ slug }: CommentSectionProps) => {
   }
 
   return (
-    <section className="flex flex-col gap-y-10">
+    <section className="flex flex-col gap-y-5 lg:gap-y-10">
       {comments.map((comment) => (
-        <div className="flex flex-col gap-y-5 border-t border-t-brand-gray-800/30 py-14 ">
+        <div className="flex flex-col gap-y-2.5 lg:gap-y-5 border-t border-t-brand-gray-800/30 py-7 lg:py-14 ">
           <div className="flex items-center justify-between">
-            <p className="font-semibold text-[25px]">{comment.name}</p>
-            <p className="font-source-serif text-secondary-600/50 text-xl font-normal">
+            <p className="font-semibold text-base lg:text-[25px]">{comment.name}</p>
+            <p className="font-source-serif text-secondary-600/50 text-sm lg:text-xl font-normal">
               {new Date(comment.createdAt).toLocaleString()}
             </p>
           </div>
-          <div className="pl-5">
-            <p className="text-xl font-normal text-secondary-600">
+          <div className="pl-2.5 lg:pl-5">
+            <p className="text-base lg:text-xl font-normal text-secondary-600">
               {comment.comment}
             </p>
           </div>
