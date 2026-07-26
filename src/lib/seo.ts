@@ -18,10 +18,11 @@ export type SeoLinkTag = {
 
 export interface BuildMetaInput {
   title: string;
-  description?: string;
+  /** Sanity/GROQ projections yield explicit `null`, not `undefined`, for empty fields. */
+  description?: string | null;
   /** Path relative to the site root, e.g. "/" or "/blog/my-slug" */
   path: string;
-  image?: string;
+  image?: string | null;
   type?: "website" | "article";
 }
 
@@ -32,27 +33,31 @@ export function absoluteUrl(path: string): string {
 
 export function buildMeta({
   title,
-  description = DEFAULT_DESCRIPTION,
+  description,
   path,
-  image = DEFAULT_OG_IMAGE,
+  image,
   type = "website",
 }: BuildMetaInput): { meta: SeoMetaTag[]; links: SeoLinkTag[] } {
+  // Sanity/GROQ returns explicit `null` for empty fields rather than
+  // omitting the key, so `??` is required here — default params only
+  // kick in for `undefined`.
+  const resolvedDescription = description ?? DEFAULT_DESCRIPTION;
   const url = absoluteUrl(path);
-  const absoluteImage = absoluteUrl(image);
+  const absoluteImage = absoluteUrl(image ?? DEFAULT_OG_IMAGE);
 
   return {
     meta: [
       { title },
-      { name: "description", content: description },
+      { name: "description", content: resolvedDescription },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:title", content: title },
-      { property: "og:description", content: description },
+      { property: "og:description", content: resolvedDescription },
       { property: "og:image", content: absoluteImage },
       { property: "og:url", content: url },
       { property: "og:type", content: type },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
-      { name: "twitter:description", content: description },
+      { name: "twitter:description", content: resolvedDescription },
       { name: "twitter:image", content: absoluteImage },
     ],
     links: [{ rel: "canonical", href: url }],
@@ -61,11 +66,11 @@ export function buildMeta({
 
 export interface ArticleSeoInput {
   title: string;
-  description?: string;
+  description?: string | null;
   slug: string;
-  image?: string;
-  publishedAt?: string;
-  authorName?: string;
+  image?: string | null;
+  publishedAt?: string | null;
+  authorName?: string | null;
 }
 
 export function buildArticleJsonLd({
@@ -84,7 +89,7 @@ export function buildArticleJsonLd({
     headline: title,
     description: description ?? DEFAULT_DESCRIPTION,
     image: [absoluteUrl(image ?? DEFAULT_OG_IMAGE)],
-    datePublished: publishedAt,
+    datePublished: publishedAt ?? undefined,
     author: authorName ? { "@type": "Person", name: authorName } : undefined,
     publisher: {
       "@type": "Organization",
