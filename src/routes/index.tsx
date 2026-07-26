@@ -10,11 +10,6 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   return (
     <main className="min-h-screen mx-auto w-full container xl:px-30 px-3.5">
-      <head>
-        <meta charSet="utf-8" />
-        <title>Welcome To Sir Patrick Blog</title>
-        <link rel="canonical" href="http://mysite.com/example" />
-      </head>
       <HomeHero />
       <ChannelLink />
       <BlogPost />
