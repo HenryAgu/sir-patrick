@@ -1,7 +1,15 @@
 import LatestNews from "@/components/latestNews";
 import { createFileRoute } from "@tanstack/react-router";
+import { buildMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/news")({
+  head: () =>
+    buildMeta({
+      title: "Latest NYSC News & Updates | Sir Patrick NYSC Blog",
+      description:
+        "Stay on top of the latest NYSC news: mobilisation timetables, call-up letter releases, camp updates, and deployment announcements for PCMs across Nigeria.",
+      path: "/news",
+    }),
   component: RouteComponent,
 });
 

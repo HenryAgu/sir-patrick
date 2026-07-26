@@ -1,7 +1,15 @@
 import SocialMenu from "@/components/shared/socialMenu";
 import { createFileRoute } from "@tanstack/react-router";
+import { buildMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
+  head: () =>
+    buildMeta({
+      title: "About Sir Patrick | NYSC Guides & PCM Community",
+      description:
+        "Meet Sir Patrick, the writer and consultant behind this NYSC community for PCMs — helping with registration, camp, PPA placement, relocation, and the full service year journey.",
+      path: "/about",
+    }),
   component: RouteComponent,
 });
 

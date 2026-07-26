@@ -1,7 +1,15 @@
 import SocialMenu from "@/components/shared/socialMenu";
 import { createFileRoute } from "@tanstack/react-router";
+import { buildMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
+  head: () =>
+    buildMeta({
+      title: "Contact Us | Sir Patrick NYSC Blog",
+      description:
+        "Reach out for business inquiries, partnership opportunities, or NYSC questions. Join our WhatsApp channel and Telegram group for daily updates.",
+      path: "/contact",
+    }),
   component: RouteComponent,
 });
 

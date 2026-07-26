@@ -3,6 +3,7 @@ import TelegramChannel from "@/components/telegramChannel";
 import { Skeleton } from "@/components/ui/skeleton";
 import WhatsappChannel from "@/components/whatsappChannel";
 import { fetchBlogBySlug } from "@/lib/fetchBlog";
+import { useDocumentMeta } from "@/lib/useDocumentMeta";
 import {
   PortableText,
   type PortableTextComponents,
@@ -27,6 +28,20 @@ function RouteComponent() {
     queryKey: ["blogs", slug],
     queryFn: () => fetchBlogBySlug(slug),
   });
+
+  useDocumentMeta(
+    blog
+      ? {
+          title: blog.title,
+          description: blog.description,
+          slug,
+          image: blog.mainImage?.asset?.url,
+          publishedAt: blog.publishedAt,
+          authorName: blog.author?.name,
+          path: `/blog/${slug}`,
+        }
+      : null
+  );
 
   const components: PortableTextComponents = {
     types: {

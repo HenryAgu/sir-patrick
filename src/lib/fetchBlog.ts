@@ -26,6 +26,7 @@ export type PostType = {
     title: string;
   }>;
   body: PortableTextBlock[];
+  description?: string;
   publishedAt: string; // ISO date string
   introduction: PortableTextBlock[];
   firstBody: PortableTextBlock[];
