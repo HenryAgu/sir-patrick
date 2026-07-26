@@ -1,6 +1,6 @@
 export const SITE_URL = "https://www.nyscupdate.com";
 export const SITE_NAME = "Sir Patrick NYSC Blog";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/hero.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 export const DEFAULT_DESCRIPTION =
   "Explore insightful articles, camp tips, PPA guides, and real-life experiences for NYSC members across Nigeria. Stay prepared and informed for your service year!";
 
