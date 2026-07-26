@@ -1,4 +1,4 @@
-export const SITE_URL = "https://nyscupdate.com";
+export const SITE_URL = "https://www.nyscupdate.com";
 export const SITE_NAME = "Sir Patrick NYSC Blog";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/hero.png`;
 export const DEFAULT_DESCRIPTION =
