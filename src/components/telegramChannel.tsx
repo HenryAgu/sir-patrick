@@ -13,7 +13,7 @@ const TelegramChannel = () => {
             className="lg:w-auto lg:h-auto w-[21.15px] h-[21.15px]"
           />
           <p className="text-white font-bold font-roboto text-[13px] lg:text-[31px] lg:leading-7">
-            Join our Telegram group
+            Join Our Telegram group
           </p>
         </span>
       </a>
